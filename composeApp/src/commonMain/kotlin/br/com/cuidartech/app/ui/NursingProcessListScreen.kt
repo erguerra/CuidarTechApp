@@ -1,0 +1,23 @@
+package br.com.cuidartech.app.ui
+
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.koin.compose.viewmodel.koinViewModel
+
+
+@Composable
+fun NursingProcessListScreen(
+    viewModel: NursingProcessListViewModel = koinViewModel()
+) {
+
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(viewModel) {
+        viewModel.getNursingList()
+    }
+
+    NursingProcessListContent(state)
+
+}

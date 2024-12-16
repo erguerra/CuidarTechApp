@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "24157986172",
+    "project_id": "cuidartech-demo",
+    "storage_bucket": "cuidartech-demo.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:24157986172:android:394ec9be9f948fa37ed8f9",
+        "android_client_info": {
+          "package_name": "br.com.cuidartech.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "24157986172-d4c5i31dqufdqgl0da34punkbttnc9si.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4X0MyMrQt-JB1dqP9tZ2X8Gbz0jl93VQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "24157986172-d4c5i31dqufdqgl0da34punkbttnc9si.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

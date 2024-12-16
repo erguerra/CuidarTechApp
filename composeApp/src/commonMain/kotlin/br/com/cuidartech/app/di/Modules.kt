@@ -1,0 +1,17 @@
+package br.com.cuidartech.app.di
+
+import br.com.cuidartech.app.data.NursingProcessRepository
+import br.com.cuidartech.app.ui.NursingProcessListViewModel
+import dev.gitlive.firebase.Firebase
+import dev.gitlive.firebase.firestore.firestore
+import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.dsl.viewModelOf
+import org.koin.dsl.module
+
+val dataModule = module {
+    single {
+        Firebase.firestore
+    }
+    singleOf(::NursingProcessRepository)
+    viewModelOf(::NursingProcessListViewModel)
+}
