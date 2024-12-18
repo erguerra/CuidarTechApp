@@ -40,7 +40,11 @@ class SubjectRepository(
     suspend fun getCaseStudiesBySubject(subjectId: String): Result<List<CaseStudy>> = runCatching {
         subjectsReference.document(subjectId).collection(
             SubjectFeatures.CASE_STUDIES.serializedName,
-        ).orderBy("id").get().documents.map { it.data<CaseStudy>().copy(id = it.id) }
+        ).orderBy("id").get().documents.map { it.data<CaseStudy>().copy(remoteId = it.id) }
+    }
+
+    suspend fun getSubjectById(subjectId: String): Result<Subject> = runCatching {
+        subjectsReference.document(subjectId).get().data()
     }
 
     suspend fun getNursingDiagnosticsBySubject(subjectId: String): Result<List<NursingDiagnostic>> =

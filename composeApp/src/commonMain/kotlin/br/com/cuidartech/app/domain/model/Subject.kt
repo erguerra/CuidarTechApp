@@ -3,6 +3,7 @@ package br.com.cuidartech.app.domain.model
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+
 @Serializable
 data class Subject(
     val id: String,
@@ -14,7 +15,8 @@ data class Subject(
 
 @Serializable
 data class CaseStudy(
-    val id: String,
+    val remoteId: String,
+    val id: Int,
     val intro: String,
     val explanation: String,
     val helper: String,

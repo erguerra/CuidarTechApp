@@ -1,7 +1,7 @@
-package br.com.cuidartech.app.app
+package br.com.cuidartech.app.app.navigation
 
 import br.com.cuidartech.app.domain.model.NursingProcess
-import br.com.cuidartech.app.ui.model.SubjectUIModel
+import br.com.cuidartech.app.domain.model.Subject
 import kotlinx.serialization.Serializable
 
 sealed interface Route {
@@ -19,7 +19,7 @@ sealed interface Route {
     data class NursingProcessRoute(val nursingProcess: NursingProcess): Route
 
     @Serializable
-    data class CaseStudyListRoute(val title: String, val subjectId: String): Route
+    data class CaseStudyListRoute(val subjectId: String, val title: String, val primaryColorLong: Long?): Route
 
     @Serializable
     data class DiagnosticListRoute(val subjectId: String): Route

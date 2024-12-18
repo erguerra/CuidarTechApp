@@ -8,11 +8,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.cuidartech.app.domain.model.SubjectFeatures
@@ -34,18 +34,15 @@ fun SubjectItem(
             ) {
                 Text(
                     subject.title,
-                    style = TextStyle(
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.White,
-                    )
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = MaterialTheme.colorScheme.onPrimary,
                 )
             }
             if(subject.features?.contains(SubjectFeatures.CASE_STUDIES) == true) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clickable { subject.goToCaseStudies(subject.title, subject.id) }
+                        .clickable { subject.goToCaseStudies(subject.id, subject.title, subject.backgroundColor) }
                         .padding(vertical = 16.dp, horizontal = 16.dp)
                 ) {
                     Text(
