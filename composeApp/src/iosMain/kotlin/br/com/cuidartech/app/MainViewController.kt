@@ -1,6 +1,7 @@
 package br.com.cuidartech.app
 
 import androidx.compose.ui.window.ComposeUIViewController
+import br.com.cuidartech.app.app.App
 import br.com.cuidartech.app.di.initKoin
 
 fun MainViewController() = ComposeUIViewController(

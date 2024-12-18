@@ -1,4 +1,4 @@
-package br.com.cuidartech.app.ui
+package br.com.cuidartech.app.ui.nursingProcess
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

@@ -1,0 +1,36 @@
+package br.com.cuidartech.app.domain.model
+
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class Subject(
+    val id: String,
+    val title: String,
+    @SerialName("primary_color")
+    val primaryColor: Long,
+    val features: Set<SubjectFeatures>?,
+)
+
+@Serializable
+data class CaseStudy(
+    val id: String,
+    val intro: String,
+    val explanation: String,
+    val helper: String,
+    val options: List<Alternative>
+)
+
+@Serializable
+data class Alternative(
+    val content: String,
+    val isCorrect: Boolean,
+)
+
+@Serializable
+data class NursingDiagnostic(
+    val id: Int,
+    val title: String,
+    val description: String?,
+    val category: String?,
+)

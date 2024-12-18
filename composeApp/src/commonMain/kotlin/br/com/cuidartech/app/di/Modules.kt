@@ -1,7 +1,10 @@
 package br.com.cuidartech.app.di
 
 import br.com.cuidartech.app.data.NursingProcessRepository
-import br.com.cuidartech.app.ui.NursingProcessListViewModel
+import br.com.cuidartech.app.data.SubjectRepository
+import br.com.cuidartech.app.ui.caseStudyList.CaseStudyListViewModel
+import br.com.cuidartech.app.ui.nursingProcess.NursingProcessListViewModel
+import br.com.cuidartech.app.ui.subjects.HomeViewModel
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.firestore.firestore
 import org.koin.core.module.dsl.singleOf
@@ -13,5 +16,8 @@ val dataModule = module {
         Firebase.firestore
     }
     singleOf(::NursingProcessRepository)
+    singleOf(::SubjectRepository)
     viewModelOf(::NursingProcessListViewModel)
+    viewModelOf(::HomeViewModel)
+    viewModelOf(::CaseStudyListViewModel)
 }

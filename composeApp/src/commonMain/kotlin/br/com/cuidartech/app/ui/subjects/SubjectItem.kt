@@ -1,0 +1,79 @@
+package br.com.cuidartech.app.ui.subjects
+
+import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Card
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import br.com.cuidartech.app.domain.model.SubjectFeatures
+import br.com.cuidartech.app.ui.model.SubjectUIModel
+
+@Composable
+fun SubjectItem(
+    modifier: Modifier = Modifier,
+    subject: SubjectUIModel
+) {
+    Card(
+        modifier = modifier.animateContentSize(),
+        elevation = 4.dp,
+        backgroundColor = Color(subject.backgroundColor)
+    ) {
+        Column {
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(vertical = 24.dp, horizontal = 16.dp)
+            ) {
+                Text(
+                    subject.title,
+                    style = TextStyle(
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.White,
+                    )
+                )
+            }
+            if(subject.features?.contains(SubjectFeatures.CASE_STUDIES) == true) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { subject.goToCaseStudies(subject.title, subject.id) }
+                        .padding(vertical = 16.dp, horizontal = 16.dp)
+                ) {
+                    Text(
+                        text = "Estudos de Caso",
+                        style = TextStyle(
+                            fontSize = 16.sp,
+                            color = Color.White,
+                        )
+                    )
+                }
+            }
+            if(subject.features?.contains(SubjectFeatures.NURSING_DIAGNOSTICS) == true) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { subject.goToNursingDiagnostics }
+                        .padding(vertical = 16.dp, horizontal = 16.dp)
+                ) {
+                    Text(
+                        text = "Diagnósticos",
+                        style = TextStyle(
+                            fontSize = 16.sp,
+                            color = Color.White,
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+}
