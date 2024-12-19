@@ -22,14 +22,14 @@ class CaseStudyViewModel(
 ) : ViewModel() {
 
 
-    private val _uiState = MutableStateFlow<ViewState>(ViewState.Loading)
+    private val _uiState = MutableStateFlow(ViewState())
     val uiState = _uiState.asStateFlow()
 
-    private val _event: MutableSharedFlow<Event> = MutableSharedFlow(
-        replay = 0,
-        extraBufferCapacity = 1,
-    )
-    val event: SharedFlow<Event> = _event.asSharedFlow()
+    private var isLoading
+        set(value) = _uiState.update {
+            it.copy(isLoading = value)
+        }
+        get() = _uiState.value.isLoading
 
     private val caseStudyPath = savedStateHandle.toRoute<Route.CaseStudyRoute>().caseStudyPath
 
@@ -39,15 +39,32 @@ class CaseStudyViewModel(
 
     private fun loadCaseStudy() {
         viewModelScope.launch {
+            isLoading = true
             repository.getCaseStudyByPath(caseStudyPath).onSuccess { caseStudy ->
-                _uiState.update {
-                    ViewState.Success(caseStudy = caseStudy)
-                }
+                handleSuccess(caseStudy)
             }.onFailure {
-                _uiState.update {
-                    ViewState.Error
-                }
+                handleFailure(it)
             }
+        }
+    }
+
+    private fun handleSuccess(caseStudy: CaseStudy) {
+        _uiState.update {
+            it.copy(
+                isLoading = false,
+                caseStudy = caseStudy,
+                error = null,
+            )
+        }
+    }
+
+    private fun handleFailure(error: Throwable) {
+        _uiState.update {
+            it.copy(
+                isLoading = false,
+                caseStudy = null,
+                error = error,
+            )
         }
     }
 
@@ -61,23 +78,43 @@ class CaseStudyViewModel(
         }
     }
 
+    fun closeDialog() {
+        _uiState.update {
+            it.copy(
+                showDialog = false,
+                dialogMessage = null,
+            )
+        }
+    }
+
     private fun showRightAnswerFeedback() {
-        _event.tryEmit(Event.ShowRightAnswerFeedback)
+        _uiState.update {
+            it.copy(
+                showDialog = true,
+                dialogMessage = it.caseStudy?.explanation,
+                dialogVariant = FeedbackDialogVariant.RIGHT_ANSWER,
+            )
+        }
     }
 
     private fun showWrongAnswerFeedback() {
-        _event.tryEmit(Event.ShowWrongAnswerFeedback)
+        _uiState.update {
+            it.copy(
+                showDialog = true,
+                dialogMessage = it.caseStudy?.helper,
+                dialogVariant = FeedbackDialogVariant.WRONG_ANSWER,
+            )
+        }
     }
 
-    sealed interface Event {
-        data object ShowRightAnswerFeedback : Event
-        data object ShowWrongAnswerFeedback : Event
-    }
+    data class ViewState (
+        val caseStudy: CaseStudy? = null,
+        val isLoading: Boolean = false,
+        val showDialog: Boolean = false,
+        val dialogMessage: String? = null,
+        val dialogVariant: FeedbackDialogVariant = FeedbackDialogVariant.WRONG_ANSWER,
+        val error: Throwable? = null,
+    )
 
-    sealed interface ViewState {
-        data object Loading : ViewState
-        data object Error : ViewState
-        data class Success(val caseStudy: CaseStudy) : ViewState
-    }
 
 }

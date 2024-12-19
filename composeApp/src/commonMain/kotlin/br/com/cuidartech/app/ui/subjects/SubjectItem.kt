@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -23,10 +25,11 @@ fun SubjectItem(
     modifier: Modifier = Modifier,
     subject: SubjectUIModel
 ) {
-    Card(
-        modifier = modifier.animateContentSize(),
+    Surface (
+        modifier = Modifier.fillMaxWidth(),
         elevation = 4.dp,
-        backgroundColor = Color(subject.backgroundColor)
+        color = Color(subject.backgroundColor),
+        shape = RoundedCornerShape(8.dp)
     ) {
         Column {
             Row(

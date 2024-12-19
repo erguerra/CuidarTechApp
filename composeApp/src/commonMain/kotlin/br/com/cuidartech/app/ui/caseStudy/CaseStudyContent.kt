@@ -41,6 +41,7 @@ fun CaseStudyContent(
     primaryColor: Color?,
     viewState: CaseStudyViewModel.ViewState,
     chooseAlternative: (Alternative) -> Unit,
+    closeModal: () -> Unit,
     navigateBack: () -> Unit,
 ) {
     Scaffold(
@@ -57,13 +58,13 @@ fun CaseStudyContent(
             modifier = Modifier.fillMaxSize().padding(top = paddingValues.calculateTopPadding()),
             contentAlignment = Alignment.Center,
         ) {
-            when (viewState) {
-                is CaseStudyViewModel.ViewState.Error -> Text("Deu merda!")
-                is CaseStudyViewModel.ViewState.Loading -> CircularProgressIndicator(
+            when {
+                viewState.error != null -> viewState.error.message?.let { Text(it) }
+                viewState.isLoading -> CircularProgressIndicator(
                     color = primaryColor ?: MaterialTheme.colorScheme.primary,
                 )
 
-                is CaseStudyViewModel.ViewState.Success -> {
+                !viewState.isLoading && viewState.caseStudy != null -> {
                     val stateVertical = rememberScrollState(0)
                     Column(
                         modifier = Modifier.fillMaxSize().verticalScroll(
@@ -156,6 +157,15 @@ fun CaseStudyContent(
                         }
                     }
                 }
+            }
+
+            if(viewState.showDialog) {
+                FeedbackDialog(
+                    variant = viewState.dialogVariant,
+                    content = viewState.dialogMessage.orEmpty(),
+                    primaryColor = primaryColor ?: MaterialTheme.colorScheme.primary,
+                    close = closeModal,
+                )
             }
         }
 
