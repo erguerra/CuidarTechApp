@@ -13,14 +13,16 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import br.com.cuidartech.app.ui.components.CuidarTechAppBar
 import br.com.cuidartech.app.ui.components.Header
@@ -28,7 +30,7 @@ import cuidartechapp.composeapp.generated.resources.Res
 import cuidartechapp.composeapp.generated.resources.icon_nursing_diagnostic
 import org.jetbrains.compose.resources.painterResource
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun NursingDiagnosticListContent(
     primaryColor: Color?,
@@ -91,6 +93,8 @@ fun NursingDiagnosticListContent(
                                 )
                                 Text(
                                     text = it.title,
+                                    maxLines = 2,
+                                    overflow = TextOverflow.Ellipsis,
                                     style = MaterialTheme.typography.headlineSmall,
                                     color = MaterialTheme.colorScheme.onPrimary,
                                 )

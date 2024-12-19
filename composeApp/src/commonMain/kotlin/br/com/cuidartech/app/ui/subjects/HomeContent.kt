@@ -12,7 +12,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material3.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import br.com.cuidartech.app.ui.components.Header
 import br.com.cuidartech.app.ui.model.SubjectUIModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeContent(
     viewState: HomeViewModel.ViewState,
@@ -28,6 +31,9 @@ fun HomeContent(
     goToCaseStudyList: (subjectId: String, title: String, primaryColorLong: Long?) -> Unit,
     goToNursingDiagnosticList: (subjectId: String, title: String, primaryColor: Long?) -> Unit,
 ) {
+    Scaffold {
+
+    }
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,

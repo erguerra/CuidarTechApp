@@ -18,6 +18,7 @@ data class CaseStudy(
     val remoteId: String,
     val id: Int,
     val intro: String,
+    val question: String?,
     val explanation: String,
     val helper: String,
     val options: List<Alternative>

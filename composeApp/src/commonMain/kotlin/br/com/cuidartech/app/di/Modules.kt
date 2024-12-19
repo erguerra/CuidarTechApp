@@ -2,6 +2,7 @@ package br.com.cuidartech.app.di
 
 import br.com.cuidartech.app.data.NursingProcessRepository
 import br.com.cuidartech.app.data.SubjectRepository
+import br.com.cuidartech.app.ui.caseStudy.CaseStudyViewModel
 import br.com.cuidartech.app.ui.caseStudyList.CaseStudyListViewModel
 import br.com.cuidartech.app.ui.nursingDiagnostics.NursingDiagnosticViewModel
 import br.com.cuidartech.app.ui.nursingProcess.NursingProcessListViewModel
@@ -22,4 +23,5 @@ val dataModule = module {
     viewModelOf(::HomeViewModel)
     viewModelOf(::CaseStudyListViewModel)
     viewModelOf(::NursingDiagnosticViewModel)
+    viewModelOf(::CaseStudyViewModel)
 }

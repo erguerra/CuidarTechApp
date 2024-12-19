@@ -11,7 +11,7 @@ class SubjectRepository(
     private val firebaseFirestore: FirebaseFirestore,
 ) {
 
-    val subjectsReference by lazy {
+    private val subjectsReference by lazy {
         firebaseFirestore.collection("subjects")
     }
 
@@ -41,7 +41,7 @@ class SubjectRepository(
     suspend fun getCaseStudiesBySubject(subjectId: String): Result<List<CaseStudy>> = runCatching {
         subjectsReference.document(subjectId).collection(
             SubjectFeatures.CASE_STUDIES.serializedName,
-        ).orderBy("id").get().documents.map { it.data<CaseStudy>().copy(remoteId = it.id) }
+        ).orderBy("id").get().documents.map { it.data<CaseStudy>().copy(remoteId = it.reference.path) }
     }
 
     suspend fun getSubjectById(subjectId: String): Result<Subject> = runCatching {
@@ -57,4 +57,8 @@ class SubjectRepository(
                 .documents
                 .map { it.data<NursingDiagnostic>().copy(remoteId = it.id) }
         }
+
+    suspend fun getCaseStudyByPath(path: String): Result<CaseStudy> = runCatching {
+        firebaseFirestore.document(path).get().data()
+    }
 }

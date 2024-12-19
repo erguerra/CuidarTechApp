@@ -13,14 +13,16 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import br.com.cuidartech.app.ui.components.CuidarTechAppBar
@@ -29,14 +31,14 @@ import cuidartechapp.composeapp.generated.resources.Res
 import cuidartechapp.composeapp.generated.resources.icon_case_study
 import org.jetbrains.compose.resources.painterResource
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun CaseStudyListContent(
     title: String,
     primaryColor: Color?,
     navigateBack: () -> Unit,
     viewState: CaseStudyListViewModel.ViewState,
-    onItemClick: (String) -> Unit,
+    onItemClick: (studyCaseId: String, title: String, primaryColor: Long?) -> Unit,
 ) {
 
     Scaffold(
@@ -50,7 +52,9 @@ fun CaseStudyListContent(
     ) { paddingValues ->
 
         when (viewState) {
-            is CaseStudyListViewModel.ViewState.Loading -> CircularProgressIndicator()
+            is CaseStudyListViewModel.ViewState.Loading -> CircularProgressIndicator(
+                color = primaryColor ?: MaterialTheme.colorScheme.primary,
+            )
             is CaseStudyListViewModel.ViewState.Error -> Text("Que merda tá acontecendo????")
             is CaseStudyListViewModel.ViewState.Success -> LazyColumn(
                 contentPadding = PaddingValues(
@@ -74,7 +78,13 @@ fun CaseStudyListContent(
                     Surface(
                         color = primaryColor ?: MaterialTheme.colorScheme.surface,
                         shape = MaterialTheme.shapes.medium,
-                        onClick = { onItemClick(it.remoteId) }
+                        onClick = {
+                            onItemClick(
+                                it.remoteId,
+                                "Estudo de Caso ${it.id}",
+                                primaryColor?.toArgb()?.toLong(),
+                            )
+                        }
                     ) {
                         Column(
                             modifier = Modifier.fillMaxWidth()

@@ -11,7 +11,7 @@ import org.koin.compose.viewmodel.koinViewModel
 fun CaseStudyListScreen(
     title: String,
     primaryColorLong: Long?,
-    navigateToAnItem: (studyCaseId: String) -> Unit,
+    navigateToAnItem: (studyCaseId: String, title: String, primaryColor: Long?) -> Unit,
     navigateBack: () -> Unit,
 ) {
 

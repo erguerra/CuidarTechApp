@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun Header(
@@ -34,9 +35,11 @@ fun Header(
 
         description?.let {
             Text(
+                modifier = Modifier.fillMaxWidth(),
+                color = Color.DarkGray,
                 text = description,
-                style = MaterialTheme.typography.bodyLarge,
-                color = descriptionColor ?: MaterialTheme.colorScheme.onBackground,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Medium
             )
         }
 
