@@ -1,6 +1,7 @@
 package br.com.cuidartech.app.app
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -9,6 +10,7 @@ import androidx.navigation.toRoute
 import br.com.cuidartech.app.app.navigation.Route
 import br.com.cuidartech.app.ui.caseStudy.CaseStudyScreen
 import br.com.cuidartech.app.ui.caseStudyList.CaseStudyListScreen
+import br.com.cuidartech.app.ui.nursingDiagnostic.NursingDiagnosticScreen
 import br.com.cuidartech.app.ui.nursingDiagnostics.NursingDiagnosticListScreen
 import br.com.cuidartech.app.ui.nursingProcess.NursingProcessListScreen
 import br.com.cuidartech.app.ui.subjects.HomeScreen
@@ -67,7 +69,11 @@ fun App() {
                         title = args.title,
                         primaryColorLong = args.primaryColorLong,
                         navigateBack = navController::navigateUp,
-                        navigateToAnItem = {}
+                        navigateToAnItem = { diagnosticPath, primaryColorLong ->
+                            navController.navigate(
+                                Route.DiagnosticRoute(diagnosticPath, primaryColorLong)
+                            )
+                        }
                     )
                 }
                 composable<Route.CaseStudyRoute> { entry ->
@@ -78,6 +84,15 @@ fun App() {
                         primaryColorLong = args.primaryColorLong,
                         navigateBack = navController::navigateUp,
                     )
+                }
+                composable<Route.DiagnosticRoute> { entry ->
+                    val args = entry.toRoute<Route.DiagnosticRoute>()
+
+                    NursingDiagnosticScreen(
+                        primaryColor = args.primaryColorLong,
+                        navigateBack = navController::navigateUp,
+                    )
+
                 }
             }
         }

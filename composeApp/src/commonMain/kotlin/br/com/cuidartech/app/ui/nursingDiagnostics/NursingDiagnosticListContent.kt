@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import br.com.cuidartech.app.ui.components.CuidarTechAppBar
@@ -35,8 +36,8 @@ import org.jetbrains.compose.resources.painterResource
 fun NursingDiagnosticListContent(
     primaryColor: Color?,
     title: String,
-    viewState: NursingDiagnosticViewModel.ViewState,
-    onItemClick: (diagnosticId: String) -> Unit,
+    viewState: NursingDiagnosticListViewModel.ViewState,
+    onItemClick: (diagnosticPath: String, primaryColor: Long?) -> Unit,
     navigateBack: () -> Unit,
 ) {
     Scaffold(
@@ -50,9 +51,9 @@ fun NursingDiagnosticListContent(
     ) { paddingValues ->
 
         when (viewState) {
-            is NursingDiagnosticViewModel.ViewState.Loading -> CircularProgressIndicator()
-            is NursingDiagnosticViewModel.ViewState.Error -> Text("Que merda tá acontecendo????")
-            is NursingDiagnosticViewModel.ViewState.Success -> LazyColumn(
+            is NursingDiagnosticListViewModel.ViewState.Loading -> CircularProgressIndicator()
+            is NursingDiagnosticListViewModel.ViewState.Error -> Text("Que merda tá acontecendo????")
+            is NursingDiagnosticListViewModel.ViewState.Success -> LazyColumn(
                 contentPadding = PaddingValues(
                     start = 16.dp,
                     end = 16.dp,
@@ -73,7 +74,9 @@ fun NursingDiagnosticListContent(
                     Surface(
                         color = primaryColor ?: MaterialTheme.colorScheme.surface,
                         shape = MaterialTheme.shapes.medium,
-                        onClick = { onItemClick(it.remoteId) }
+                        onClick = {
+                            onItemClick(it.remoteId, primaryColor?.toArgb()?.toLong())
+                        }
                     ) {
                         Column(
                             modifier = Modifier.fillMaxWidth()

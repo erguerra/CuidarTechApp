@@ -7,9 +7,16 @@ class NursingProcessRepository(
     private val firebaseFirestore: FirebaseFirestore,
 ) {
 
+    private val nursingProcessCollectionReference by lazy {
+        firebaseFirestore.collection("nursing_processes")
+    }
+
     suspend fun getNursingProcessList(): Result<List<NursingProcess>> = runCatching {
-        val processResponse = firebaseFirestore.collection("nursing_processes").get()
-        processResponse.documents.map { it.data() }
+        nursingProcessCollectionReference.get().documents.map { it.data() }
+    }
+
+    suspend fun getNursingProcessById(id: String): Result<NursingProcess> = runCatching {
+        nursingProcessCollectionReference.document(id).get().data()
     }
 
 }

@@ -11,11 +11,11 @@ import org.koin.compose.viewmodel.koinViewModel
 fun NursingDiagnosticListScreen(
     title: String,
     primaryColorLong: Long?,
-    navigateToAnItem: (diagnosticId: String) -> Unit,
+    navigateToAnItem: (diagnosticPath: String, primaryColor: Long?) -> Unit,
     navigateBack: () -> Unit,
 ) {
 
-    val viewModel: NursingDiagnosticViewModel = koinViewModel()
+    val viewModel: NursingDiagnosticListViewModel = koinViewModel()
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     NursingDiagnosticListContent(

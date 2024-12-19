@@ -37,4 +37,6 @@ data class NursingDiagnostic(
     val title: String,
     val description: String?,
     val category: String?,
+    @SerialName("actions")
+    val interventions: List<String>,
 )

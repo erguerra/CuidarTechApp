@@ -55,10 +55,14 @@ class SubjectRepository(
                 .orderBy("title", Direction.ASCENDING)
                 .get()
                 .documents
-                .map { it.data<NursingDiagnostic>().copy(remoteId = it.id) }
+                .map { it.data<NursingDiagnostic>().copy(remoteId = it.reference.path) }
         }
 
     suspend fun getCaseStudyByPath(path: String): Result<CaseStudy> = runCatching {
+        firebaseFirestore.document(path).get().data()
+    }
+
+    suspend fun getNursingDiagnosticByPath(path: String): Result<NursingDiagnostic> = runCatching {
         firebaseFirestore.document(path).get().data()
     }
 }
