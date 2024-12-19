@@ -1,4 +1,4 @@
-package br.com.cuidartech.app.ui.nursingProcess
+package br.com.cuidartech.app.ui.nursingProcessList
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

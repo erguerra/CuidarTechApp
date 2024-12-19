@@ -5,8 +5,9 @@ import br.com.cuidartech.app.data.SubjectRepository
 import br.com.cuidartech.app.ui.caseStudy.CaseStudyViewModel
 import br.com.cuidartech.app.ui.caseStudyList.CaseStudyListViewModel
 import br.com.cuidartech.app.ui.nursingDiagnostic.NursingDiagnosticViewModel
-import br.com.cuidartech.app.ui.nursingDiagnostics.NursingDiagnosticListViewModel
-import br.com.cuidartech.app.ui.nursingProcess.NursingProcessListViewModel
+import br.com.cuidartech.app.ui.nursingDiagnosticList.NursingDiagnosticListViewModel
+import br.com.cuidartech.app.ui.nursingProcess.NursingProcessViewModel
+import br.com.cuidartech.app.ui.nursingProcessList.NursingProcessListViewModel
 import br.com.cuidartech.app.ui.subjects.HomeViewModel
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.firestore.firestore
@@ -26,4 +27,5 @@ val dataModule = module {
     viewModelOf(::NursingDiagnosticListViewModel)
     viewModelOf(::CaseStudyViewModel)
     viewModelOf(::NursingDiagnosticViewModel)
+    viewModelOf(::NursingProcessViewModel)
 }

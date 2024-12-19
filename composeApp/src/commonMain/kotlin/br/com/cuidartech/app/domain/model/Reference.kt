@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Reference(
-    val content: String,
+    val reference: String,
     val url: String?,
 )

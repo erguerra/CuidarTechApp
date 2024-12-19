@@ -1,7 +1,6 @@
 package br.com.cuidartech.app.app
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -11,8 +10,9 @@ import br.com.cuidartech.app.app.navigation.Route
 import br.com.cuidartech.app.ui.caseStudy.CaseStudyScreen
 import br.com.cuidartech.app.ui.caseStudyList.CaseStudyListScreen
 import br.com.cuidartech.app.ui.nursingDiagnostic.NursingDiagnosticScreen
-import br.com.cuidartech.app.ui.nursingDiagnostics.NursingDiagnosticListScreen
-import br.com.cuidartech.app.ui.nursingProcess.NursingProcessListScreen
+import br.com.cuidartech.app.ui.nursingDiagnosticList.NursingDiagnosticListScreen
+import br.com.cuidartech.app.ui.nursingProcess.NursingProcessScreen
+import br.com.cuidartech.app.ui.nursingProcessList.NursingProcessListScreen
 import br.com.cuidartech.app.ui.subjects.HomeScreen
 import br.com.cuidartech.app.ui.theme.CuidardTechTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -46,7 +46,12 @@ fun App() {
                 }
                 composable<Route.NursingProcessListRoute> {
                     NursingProcessListScreen(
-                        navigateBack = navController::navigateUp
+                        navigateBack = navController::navigateUp,
+                        navigateToItem = { processId ->
+                            navController.navigate(
+                                Route.NursingProcessRoute(processId)
+                            )
+                        }
                     )
                 }
                 composable<Route.CaseStudyListRoute> { entry ->
@@ -93,6 +98,11 @@ fun App() {
                         navigateBack = navController::navigateUp,
                     )
 
+                }
+                composable<Route.NursingProcessRoute> {
+                    NursingProcessScreen(
+                        navigateBack = navController::navigateUp
+                    )
                 }
             }
         }

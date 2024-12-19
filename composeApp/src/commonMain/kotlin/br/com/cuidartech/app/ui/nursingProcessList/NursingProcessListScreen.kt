@@ -1,4 +1,4 @@
-package br.com.cuidartech.app.ui.nursingProcess
+package br.com.cuidartech.app.ui.nursingProcessList
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -10,6 +10,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun NursingProcessListScreen(
     viewModel: NursingProcessListViewModel = koinViewModel(),
+    navigateToItem: (processId: String) -> Unit,
     navigateBack: () -> Unit,
 ) {
 
@@ -20,8 +21,9 @@ fun NursingProcessListScreen(
     }
 
     NursingProcessListContent(
-        state,
-        navigateBack,
+        state = state,
+        onItemClick = navigateToItem,
+        navigateBack = navigateBack,
     )
 
 }

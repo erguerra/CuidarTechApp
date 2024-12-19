@@ -16,7 +16,7 @@ sealed interface Route {
     data object NursingProcessListRoute: Route
 
     @Serializable
-    data class NursingProcessRoute(val nursingProcess: NursingProcess): Route
+    data class NursingProcessRoute(val nursingProcessId: String): Route
 
     @Serializable
     data class CaseStudyListRoute(val subjectId: String, val title: String, val primaryColorLong: Long?): Route

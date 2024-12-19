@@ -1,4 +1,4 @@
-package br.com.cuidartech.app.ui.nursingDiagnostics
+package br.com.cuidartech.app.ui.nursingDiagnosticList
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel

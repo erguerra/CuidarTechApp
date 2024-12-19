@@ -4,7 +4,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class NursingProcess(
+    val remoteId: String,
     val title: String,
     val body: String,
-    val references: Set<Reference>,
+    val references: List<Reference>,
 )

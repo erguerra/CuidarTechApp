@@ -1,4 +1,4 @@
-package br.com.cuidartech.app.ui.nursingProcess
+package br.com.cuidartech.app.ui.nursingProcessList
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,17 +15,16 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import br.com.cuidartech.app.domain.model.NursingProcess
 import br.com.cuidartech.app.ui.components.CuidarTechAppBar
 import br.com.cuidartech.app.ui.components.Header
 import cuidartechapp.composeapp.generated.resources.Res
@@ -37,7 +36,7 @@ import org.jetbrains.compose.resources.painterResource
 fun NursingProcessListContent(
     state: NursingProcessListViewModel.ViewState,
     navigateBack: () -> Unit,
-    onItemClick: (nursingProcess: NursingProcess) -> Unit = {},
+    onItemClick: (nursingProcessId: String) -> Unit = {},
 ) {
     Scaffold(
         topBar = {
@@ -56,10 +55,7 @@ fun NursingProcessListContent(
                 is NursingProcessListViewModel.ViewState.Error -> Text("QUe merda tá acontecendo????")
                 is NursingProcessListViewModel.ViewState.Success -> LazyColumn(
                     contentPadding = PaddingValues(
-                        start = 16.dp,
-                        end = 16.dp,
                         top = paddingValues.calculateTopPadding(),
-                        bottom = 16.dp,
                     ),
                     modifier = Modifier.fillMaxSize().padding(all = 16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -76,7 +72,7 @@ fun NursingProcessListContent(
                         Surface(
                             color = MaterialTheme.colorScheme.primary,
                             shape = MaterialTheme.shapes.medium,
-                            onClick = { onItemClick(it) }
+                            onClick = { onItemClick(it.remoteId) }
                         ) {
                             Column(
                                 modifier = Modifier.fillMaxWidth()

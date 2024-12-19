@@ -12,7 +12,9 @@ class NursingProcessRepository(
     }
 
     suspend fun getNursingProcessList(): Result<List<NursingProcess>> = runCatching {
-        nursingProcessCollectionReference.get().documents.map { it.data() }
+        nursingProcessCollectionReference.get().documents.map {
+            it.data<NursingProcess>().copy(remoteId = it.id)
+        }
     }
 
     suspend fun getNursingProcessById(id: String): Result<NursingProcess> = runCatching {

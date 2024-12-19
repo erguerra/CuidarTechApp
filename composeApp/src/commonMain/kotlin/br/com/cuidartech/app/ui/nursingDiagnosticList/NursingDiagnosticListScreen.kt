@@ -1,4 +1,4 @@
-package br.com.cuidartech.app.ui.nursingDiagnostics
+package br.com.cuidartech.app.ui.nursingDiagnosticList
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

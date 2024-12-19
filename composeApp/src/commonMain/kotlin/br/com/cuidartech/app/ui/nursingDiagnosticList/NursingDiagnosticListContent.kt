@@ -1,4 +1,4 @@
-package br.com.cuidartech.app.ui.nursingDiagnostics
+package br.com.cuidartech.app.ui.nursingDiagnosticList
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
