@@ -18,15 +18,11 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import br.com.cuidartech.app.domain.model.CaseStudy
 import br.com.cuidartech.app.ui.components.CuidarTechAppBar
 import br.com.cuidartech.app.ui.components.Header
 import cuidartechapp.composeapp.generated.resources.Res
@@ -40,7 +36,7 @@ fun CaseStudyListContent(
     primaryColor: Color?,
     navigateBack: () -> Unit,
     viewState: CaseStudyListViewModel.ViewState,
-    onItemClick: (CaseStudy) -> Unit,
+    onItemClick: (String) -> Unit,
 ) {
 
     Scaffold(
@@ -78,7 +74,7 @@ fun CaseStudyListContent(
                     Surface(
                         color = primaryColor ?: MaterialTheme.colorScheme.surface,
                         shape = MaterialTheme.shapes.medium,
-                        onClick = { onItemClick(it) }
+                        onClick = { onItemClick(it.remoteId) }
                     ) {
                         Column(
                             modifier = Modifier.fillMaxWidth()

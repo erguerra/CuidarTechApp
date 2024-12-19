@@ -32,6 +32,7 @@ data class Alternative(
 @Serializable
 data class NursingDiagnostic(
     val id: Int,
+    val remoteId: String,
     val title: String,
     val description: String?,
     val category: String?,

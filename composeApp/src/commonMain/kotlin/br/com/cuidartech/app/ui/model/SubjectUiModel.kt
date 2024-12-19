@@ -10,5 +10,5 @@ data class SubjectUIModel(
     val backgroundColor: Long,
     val features: Set<SubjectFeatures>?,
     val goToCaseStudies: (subjectId: String, title:String, primaryColorLong: Long?) -> Unit,
-    val goToNursingDiagnostics: (subjectId: String) -> Unit,
+    val goToNursingDiagnostics: (subjectId: String, title: String, primaryColor: Long?) -> Unit,
 )

@@ -26,7 +26,7 @@ fun HomeContent(
     viewState: HomeViewModel.ViewState,
     goToNursingProcessList: () -> Unit,
     goToCaseStudyList: (subjectId: String, title: String, primaryColorLong: Long?) -> Unit,
-    goToNursingDiagnosticList: (subjectId: String) -> Unit,
+    goToNursingDiagnosticList: (subjectId: String, title: String, primaryColor: Long?) -> Unit,
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),

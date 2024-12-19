@@ -4,6 +4,7 @@ import br.com.cuidartech.app.domain.model.CaseStudy
 import br.com.cuidartech.app.domain.model.NursingDiagnostic
 import br.com.cuidartech.app.domain.model.Subject
 import br.com.cuidartech.app.domain.model.SubjectFeatures
+import dev.gitlive.firebase.firestore.Direction
 import dev.gitlive.firebase.firestore.FirebaseFirestore
 
 class SubjectRepository(
@@ -23,7 +24,7 @@ class SubjectRepository(
         }
     }
 
-    suspend fun getSubjectsFeaturesById(id: String): Result<Set<SubjectFeatures>> = runCatching {
+    private suspend fun getSubjectsFeaturesById(id: String): Result<Set<SubjectFeatures>> = runCatching {
         val features = mutableSetOf<SubjectFeatures>()
         SubjectFeatures.entries.forEach {
             val subCollection = subjectsReference
@@ -51,9 +52,9 @@ class SubjectRepository(
         runCatching {
             subjectsReference.document(subjectId)
                 .collection(SubjectFeatures.NURSING_DIAGNOSTICS.serializedName)
-                .orderBy("id")
+                .orderBy("title", Direction.ASCENDING)
                 .get()
                 .documents
-                .map { it.data() }
+                .map { it.data<NursingDiagnostic>().copy(remoteId = it.id) }
         }
 }

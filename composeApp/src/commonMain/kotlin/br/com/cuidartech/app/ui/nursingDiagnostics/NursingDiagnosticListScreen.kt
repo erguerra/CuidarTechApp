@@ -1,10 +1,32 @@
 package br.com.cuidartech.app.ui.nursingDiagnostics
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.koin.compose.viewmodel.koinViewModel
 
-//@Composable
-//fun NursingDiagnosticListScreen(
-//    navigateToAnItem()
-//) {
-//
-//}
+@Composable
+fun NursingDiagnosticListScreen(
+    title: String,
+    primaryColorLong: Long?,
+    navigateToAnItem: (diagnosticId: String) -> Unit,
+    navigateBack: () -> Unit,
+) {
+
+    val viewModel: NursingDiagnosticViewModel = koinViewModel()
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+
+    NursingDiagnosticListContent(
+        title = title,
+        primaryColor = primaryColorLong?.run { Color(this) },
+        navigateBack = navigateBack,
+        onItemClick = navigateToAnItem,
+        viewState = state,
+    )
+
+    LaunchedEffect(Unit) {
+        viewModel.getDiagnosticList()
+    }
+}

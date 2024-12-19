@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import br.com.cuidartech.app.app.navigation.Route
 import br.com.cuidartech.app.ui.caseStudyList.CaseStudyListScreen
+import br.com.cuidartech.app.ui.nursingDiagnostics.NursingDiagnosticListScreen
 import br.com.cuidartech.app.ui.nursingProcess.NursingProcessListScreen
 import br.com.cuidartech.app.ui.subjects.HomeScreen
 import br.com.cuidartech.app.ui.theme.CuidardTechTheme
@@ -33,15 +34,17 @@ fun App() {
                                 Route.CaseStudyListRoute(subjectId, title, primaryColorLong = primaryColor)
                             )
                         },
-                        goToDiagnosticList = { subjectId ->
+                        goToDiagnosticList = { subjectId, title, primaryColor ->
                             navController.navigate(
-                                Route.DiagnosticListRoute(subjectId)
+                                Route.DiagnosticListRoute(subjectId, title, primaryColor)
                             )
                         }
                     )
                 }
                 composable<Route.NursingProcessListRoute> {
-                    NursingProcessListScreen()
+                    NursingProcessListScreen(
+                        navigateBack = navController::navigateUp
+                    )
                 }
                 composable<Route.CaseStudyListRoute> { entry ->
                     val args = entry.toRoute<Route.CaseStudyListRoute>()
@@ -52,8 +55,15 @@ fun App() {
                         navigateToAnItem = {}
                     )
                 }
-                composable<Route.DiagnosticListRoute> {
+                composable<Route.DiagnosticListRoute> { entry ->
+                    val args = entry.toRoute<Route.DiagnosticListRoute>()
 
+                    NursingDiagnosticListScreen(
+                        title = args.title,
+                        primaryColorLong = args.primaryColorLong,
+                        navigateBack = navController::navigateUp,
+                        navigateToAnItem = {}
+                    )
                 }
             }
         }

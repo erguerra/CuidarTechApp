@@ -9,7 +9,8 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun NursingProcessListScreen(
-    viewModel: NursingProcessListViewModel = koinViewModel()
+    viewModel: NursingProcessListViewModel = koinViewModel(),
+    navigateBack: () -> Unit,
 ) {
 
     val state by viewModel.uiState.collectAsStateWithLifecycle()
@@ -18,6 +19,9 @@ fun NursingProcessListScreen(
         viewModel.getNursingList()
     }
 
-    NursingProcessListContent(state)
+    NursingProcessListContent(
+        state,
+        navigateBack,
+    )
 
 }

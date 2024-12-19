@@ -22,7 +22,7 @@ sealed interface Route {
     data class CaseStudyListRoute(val subjectId: String, val title: String, val primaryColorLong: Long?): Route
 
     @Serializable
-    data class DiagnosticListRoute(val subjectId: String): Route
+    data class DiagnosticListRoute(val subjectId: String, val title: String, val primaryColorLong: Long?): Route
 
     @Serializable
     data class CaseStudyRoute(val caseStudyPath: String): Route
