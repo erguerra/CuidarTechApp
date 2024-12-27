@@ -1,5 +1,6 @@
 package br.com.cuidartech.app.domain.model
 
+import br.com.cuidartech.app.ui.model.NursingDiagnosticListItem
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -9,7 +10,7 @@ data class Subject(
     val id: String,
     val title: String,
     @SerialName("primary_color")
-    val primaryColor: Long,
+    val primaryColor: Long?,
     val features: Set<SubjectFeatures>?,
 )
 
@@ -35,8 +36,8 @@ data class NursingDiagnostic(
     val id: Int,
     val remoteId: String,
     val title: String,
-    val description: String?,
-    val category: String?,
+    val description: String,
+    val category: String,
     @SerialName("actions")
     val interventions: List<String>,
 )

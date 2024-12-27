@@ -22,6 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import br.com.cuidartech.app.ui.model.SubjectUIModel
 import cuidartechapp.composeapp.generated.resources.Res
@@ -108,7 +109,7 @@ fun HomeContent(
                             subject = SubjectUIModel(
                                 id = it.id,
                                 title = it.title,
-                                backgroundColor = it.primaryColor,
+                                backgroundColor = it.primaryColor ?: MaterialTheme.colorScheme.primary.toArgb().toLong(),
                                 features = it.features,
                                 goToNursingDiagnostics = goToNursingDiagnosticList,
                                 goToCaseStudies = goToCaseStudyList,

@@ -96,34 +96,27 @@ fun NursingDiagnosticContent(
                                         )
                                     }
                                     Spacer(Modifier.size(16.dp))
-                                    viewState.nursingDiagnostic.category?.let { category ->
-                                        Text(
-                                            text = "Categoria: $category",
-                                            style = MaterialTheme.typography.bodyLarge,
-                                            fontSize = 20.sp,
-                                            fontWeight = FontWeight.SemiBold,
-                                            color = primaryColor
-                                        )
-                                    }
+                                    Text(
+                                        text = "Categoria: ${viewState.nursingDiagnostic.category}",
+                                        style = MaterialTheme.typography.bodyLarge,
+                                        fontSize = 20.sp,
+                                        fontWeight = FontWeight.SemiBold,
+                                        color = primaryColor
+                                    )
 
-
-                                    viewState.nursingDiagnostic.description?.let { description ->
-                                        Spacer(Modifier.size(24.dp))
-                                        Text(
-                                            modifier = Modifier.fillMaxWidth(),
-                                            color = Color.DarkGray,
-                                            text = description,
-                                            fontSize = 18.sp,
-                                            fontWeight = FontWeight.Medium
-                                        )
-                                    }
+                                    Spacer(Modifier.size(24.dp))
+                                    Text(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        color = Color.DarkGray,
+                                        text = viewState.nursingDiagnostic.description,
+                                        fontSize = 18.sp,
+                                        fontWeight = FontWeight.Medium
+                                    )
 
                                     Spacer(Modifier.size(16.dp))
                                 }
 
                             }
-
-
                         }
                         Spacer(Modifier.size(24.dp))
 

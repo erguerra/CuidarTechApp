@@ -23,10 +23,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import br.com.cuidartech.app.ui.components.CuidarTechAppBar
 import br.com.cuidartech.app.ui.components.Header
+import br.com.cuidartech.app.ui.model.NursingDiagnosticCategoryDivider
+import br.com.cuidartech.app.ui.model.NursingDiagnosticItemUiModel
 import cuidartechapp.composeapp.generated.resources.Res
 import cuidartechapp.composeapp.generated.resources.icon_nursing_diagnostic
 import org.jetbrains.compose.resources.painterResource
@@ -67,43 +72,53 @@ fun NursingDiagnosticListContent(
                         title = title,
                         titleColor = primaryColor,
                     )
-                    Spacer(Modifier.size(24.dp))
+                    Spacer(Modifier.size(8.dp))
                 }
 
-                items(viewState.diagnosticList, key = { it.id }) {
-                    Surface(
-                        color = primaryColor ?: MaterialTheme.colorScheme.surface,
-                        shape = MaterialTheme.shapes.medium,
-                        onClick = {
-                            onItemClick(it.remoteId, primaryColor?.toArgb()?.toLong())
-                        }
-                    ) {
-                        Column(
-                            modifier = Modifier.fillMaxWidth()
-                                .padding(horizontal = 8.dp, vertical = 16.dp),
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
+                items(viewState.diagnosticList, key = { it.title }) { diagnosticItem ->
+                    when(diagnosticItem) {
+                        is NursingDiagnosticCategoryDivider -> Text(
+                            modifier = Modifier.padding(vertical = 16.dp),
+                            text = diagnosticItem.title,
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 20.sp,
+                            color = primaryColor?.copy(alpha = 0.8f) ?: MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
+                        )
+                        is NursingDiagnosticItemUiModel -> Surface(
+                            color = primaryColor ?: MaterialTheme.colorScheme.surface,
+                            shape = MaterialTheme.shapes.medium,
+                            onClick = {
+                                onItemClick(diagnosticItem.remoteId, primaryColor?.toArgb()?.toLong())
+                            }
                         ) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                verticalAlignment = Alignment.CenterVertically,
+                            Column(
+                                modifier = Modifier.fillMaxWidth()
+                                    .padding(horizontal = 8.dp, vertical = 16.dp),
+                                verticalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
-                                Icon(
-                                    modifier = Modifier.size(42.dp),
-                                    painter = painterResource(Res.drawable.icon_nursing_diagnostic),
-                                    tint = MaterialTheme.colorScheme.onPrimary,
-                                    contentDescription = "Diagnóstico",
-                                )
-                                Text(
-                                    text = it.title,
-                                    maxLines = 2,
-                                    overflow = TextOverflow.Ellipsis,
-                                    style = MaterialTheme.typography.headlineSmall,
-                                    color = MaterialTheme.colorScheme.onPrimary,
-                                )
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    Icon(
+                                        modifier = Modifier.size(42.dp),
+                                        painter = painterResource(Res.drawable.icon_nursing_diagnostic),
+                                        tint = MaterialTheme.colorScheme.onPrimary,
+                                        contentDescription = "Diagnóstico",
+                                    )
+                                    Text(
+                                        text = diagnosticItem.title,
+                                        maxLines = 2,
+                                        overflow = TextOverflow.Ellipsis,
+                                        style = MaterialTheme.typography.headlineSmall,
+                                        color = MaterialTheme.colorScheme.onPrimary,
+                                    )
+                                }
                             }
                         }
                     }
+
                 }
             }
         }

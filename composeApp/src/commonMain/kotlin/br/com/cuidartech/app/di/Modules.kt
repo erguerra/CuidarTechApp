@@ -2,6 +2,7 @@ package br.com.cuidartech.app.di
 
 import br.com.cuidartech.app.data.NursingProcessRepository
 import br.com.cuidartech.app.data.SubjectRepository
+import br.com.cuidartech.app.mappers.NursingDiagnosticUIModelMapper
 import br.com.cuidartech.app.ui.caseStudy.CaseStudyViewModel
 import br.com.cuidartech.app.ui.caseStudyList.CaseStudyListViewModel
 import br.com.cuidartech.app.ui.nursingDiagnostic.NursingDiagnosticViewModel
@@ -21,6 +22,7 @@ val dataModule = module {
     }
     singleOf(::NursingProcessRepository)
     singleOf(::SubjectRepository)
+    singleOf(::NursingDiagnosticUIModelMapper)
     viewModelOf(::NursingProcessListViewModel)
     viewModelOf(::HomeViewModel)
     viewModelOf(::CaseStudyListViewModel)

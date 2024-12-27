@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -46,11 +48,14 @@ fun FeedbackDialog(
             color = MaterialTheme.colorScheme.surface,
             elevation = 4.dp,
         ) {
+            val scrollState = rememberScrollState(0)
             Column(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+                modifier = Modifier.fillMaxWidth().verticalScroll(scrollState)
+                    .padding(horizontal = 8.dp),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
+
+                ) {
                 val (title, color, icon) = when (variant) {
                     FeedbackDialogVariant.WRONG_ANSWER -> Triple(
                         "Resposta Errada",

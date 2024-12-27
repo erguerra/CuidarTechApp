@@ -52,6 +52,7 @@ class SubjectRepository(
         runCatching {
             subjectsReference.document(subjectId)
                 .collection(SubjectFeatures.NURSING_DIAGNOSTICS.serializedName)
+                .orderBy("category", Direction.ASCENDING)
                 .orderBy("title", Direction.ASCENDING)
                 .get()
                 .documents
