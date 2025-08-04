@@ -14,7 +14,6 @@ fun CaseStudyListScreen(
     navigateToAnItem: (studyCaseId: String, title: String, primaryColor: Long?) -> Unit,
     navigateBack: () -> Unit,
 ) {
-
     val viewModel: CaseStudyListViewModel = koinViewModel()
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 

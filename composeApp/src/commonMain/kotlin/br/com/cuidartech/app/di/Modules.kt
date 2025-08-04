@@ -16,18 +16,19 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
-val dataModule = module {
-    single {
-        Firebase.firestore
+val dataModule =
+    module {
+        single {
+            Firebase.firestore
+        }
+        singleOf(::NursingProcessRepository)
+        singleOf(::SubjectRepository)
+        singleOf(::NursingDiagnosticUIModelMapper)
+        viewModelOf(::NursingProcessListViewModel)
+        viewModelOf(::HomeViewModel)
+        viewModelOf(::CaseStudyListViewModel)
+        viewModelOf(::NursingDiagnosticListViewModel)
+        viewModelOf(::CaseStudyViewModel)
+        viewModelOf(::NursingDiagnosticViewModel)
+        viewModelOf(::NursingProcessViewModel)
     }
-    singleOf(::NursingProcessRepository)
-    singleOf(::SubjectRepository)
-    singleOf(::NursingDiagnosticUIModelMapper)
-    viewModelOf(::NursingProcessListViewModel)
-    viewModelOf(::HomeViewModel)
-    viewModelOf(::CaseStudyListViewModel)
-    viewModelOf(::NursingDiagnosticListViewModel)
-    viewModelOf(::CaseStudyViewModel)
-    viewModelOf(::NursingDiagnosticViewModel)
-    viewModelOf(::NursingProcessViewModel)
-}

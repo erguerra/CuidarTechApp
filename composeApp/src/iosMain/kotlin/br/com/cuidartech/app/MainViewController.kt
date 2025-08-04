@@ -4,8 +4,9 @@ import androidx.compose.ui.window.ComposeUIViewController
 import br.com.cuidartech.app.app.App
 import br.com.cuidartech.app.di.initKoin
 
-fun MainViewController() = ComposeUIViewController(
-    configure = {
-        initKoin()
-    }
-) { App() }
+fun MainViewController() =
+    ComposeUIViewController(
+        configure = {
+            initKoin()
+        },
+    ) { App() }

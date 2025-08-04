@@ -18,7 +18,6 @@ class CaseStudyListViewModel(
     private val repository: SubjectRepository,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow<ViewState>(ViewState.Loading)
     val uiState: StateFlow<ViewState> = _uiState.asStateFlow()
 
@@ -30,21 +29,27 @@ class CaseStudyListViewModel(
 
     private fun getCaseStudyList() {
         viewModelScope.launch {
-            repository.getCaseStudiesBySubject(subjectId).onSuccess { studyList ->
-                _uiState.update {
-                    ViewState.Success(
-                        caseStudies = studyList,
-                    )
+            repository
+                .getCaseStudiesBySubject(subjectId)
+                .onSuccess { studyList ->
+                    _uiState.update {
+                        ViewState.Success(
+                            caseStudies = studyList,
+                        )
+                    }
+                }.onFailure {
+                    _uiState.update { ViewState.Error }
                 }
-            }.onFailure {
-                _uiState.update { ViewState.Error }
-            }
         }
     }
 
     sealed interface ViewState {
-        data class Success(val caseStudies: List<CaseStudy>) : ViewState
-        data object Loading: ViewState
-        data object Error: ViewState
+        data class Success(
+            val caseStudies: List<CaseStudy>,
+        ) : ViewState
+
+        data object Loading : ViewState
+
+        data object Error : ViewState
     }
 }

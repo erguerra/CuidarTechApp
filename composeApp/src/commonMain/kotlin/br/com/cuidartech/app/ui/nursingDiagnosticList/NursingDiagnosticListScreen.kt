@@ -14,7 +14,6 @@ fun NursingDiagnosticListScreen(
     navigateToAnItem: (diagnosticPath: String, primaryColor: Long?) -> Unit,
     navigateBack: () -> Unit,
 ) {
-
     val viewModel: NursingDiagnosticListViewModel = koinViewModel()
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 

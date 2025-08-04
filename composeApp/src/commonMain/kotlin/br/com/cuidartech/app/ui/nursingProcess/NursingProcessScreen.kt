@@ -10,10 +10,7 @@ import kotlinx.coroutines.flow.onEach
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun NursingProcessScreen(
-    navigateBack: () -> Unit,
-) {
-
+fun NursingProcessScreen(navigateBack: () -> Unit) {
     val viewModel: NursingProcessViewModel = koinViewModel()
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -29,8 +26,6 @@ fun NursingProcessScreen(
         viewModel = viewModel,
         launchUrl = uriHandler::openUri,
     )
-
-
 }
 
 @Composable
@@ -39,10 +34,11 @@ private fun EventHandler(
     launchUrl: (String) -> Unit,
 ) {
     LaunchedEffect(Unit) {
-        viewModel.event.onEach { event ->
-            when(event) {
-                is NursingProcessViewModel.Event.LaunchReferenceUrl -> launchUrl(event.url)
-            }
-        }.launchIn(this)
+        viewModel.event
+            .onEach { event ->
+                when (event) {
+                    is NursingProcessViewModel.Event.LaunchReferenceUrl -> launchUrl(event.url)
+                }
+            }.launchIn(this)
     }
 }

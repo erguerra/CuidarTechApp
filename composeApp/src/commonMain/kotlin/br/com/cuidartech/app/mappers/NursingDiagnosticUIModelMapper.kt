@@ -6,7 +6,6 @@ import br.com.cuidartech.app.ui.model.NursingDiagnosticItemUiModel
 import br.com.cuidartech.app.ui.model.NursingDiagnosticListItem
 
 class NursingDiagnosticUIModelMapper {
-
     private fun transformToUiModel(nursingDiagnostic: NursingDiagnostic): NursingDiagnosticItemUiModel =
         with(nursingDiagnostic) {
             NursingDiagnosticItemUiModel(
@@ -20,13 +19,13 @@ class NursingDiagnosticUIModelMapper {
     fun transformToCategorizedList(nursingDiagnosticList: List<NursingDiagnostic>): List<NursingDiagnosticListItem> {
         val categorizedList = mutableListOf<NursingDiagnosticListItem>()
         nursingDiagnosticList.forEachIndexed { index, nursingDiagnostic ->
-            when(index) {
+            when (index) {
                 0 -> {
                     categorizedList.add(NursingDiagnosticCategoryDivider(title = nursingDiagnostic.category))
                     categorizedList.add(transformToUiModel(nursingDiagnostic))
                 }
                 else -> {
-                    if(nursingDiagnostic.category != nursingDiagnosticList[index-1].category) {
+                    if (nursingDiagnostic.category != nursingDiagnosticList[index - 1].category) {
                         categorizedList.add(NursingDiagnosticCategoryDivider(title = nursingDiagnostic.category))
                         categorizedList.add(transformToUiModel(nursingDiagnostic))
                     } else {

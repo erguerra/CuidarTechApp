@@ -19,7 +19,7 @@ fun CuidarTechAppBar(
     TopAppBar(
         backgroundColor = MaterialTheme.colorScheme.surface,
         title = {
-            title?.let{
+            title?.let {
                 Text(text = it, color = contentColor ?: MaterialTheme.colorScheme.primary)
             }
         },
@@ -33,6 +33,6 @@ fun CuidarTechAppBar(
                     )
                 }
             }
-        }
+        },
     )
 }

@@ -11,7 +11,7 @@ androidx-material = "1.12.0"
 androidx-test-junit = "1.2.1"
 compose-multiplatform = "1.7.1"
 junit = "4.13.2"
-kotlin = "2.0.21"
+kotlin = "2.2.0"
 firebase-bom = "33.7.0"
 google-services = "4.4.2"
 gitlive-firebase = "2.1.0"
@@ -44,7 +44,6 @@ koin-compose-viewmodel-navigation = { group = "io.insert-koin", name = "koin-com
 koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
 koin-androidx-compose-navigation = { group = "io.insert-koin", name = "koin-androidx-compose-navigation", version.ref = "koin" }
 compose-material3 = { group = "org.jetbrains.compose.material3", name = "material3", version.ref = "compose-material3"}
-
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

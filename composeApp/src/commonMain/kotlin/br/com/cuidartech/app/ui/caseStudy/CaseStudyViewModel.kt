@@ -20,15 +20,14 @@ class CaseStudyViewModel(
     private val repository: SubjectRepository,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-
-
     private val _uiState = MutableStateFlow(ViewState())
     val uiState = _uiState.asStateFlow()
 
     private var isLoading
-        set(value) = _uiState.update {
-            it.copy(isLoading = value)
-        }
+        set(value) =
+            _uiState.update {
+                it.copy(isLoading = value)
+            }
         get() = _uiState.value.isLoading
 
     private val caseStudyPath = savedStateHandle.toRoute<Route.CaseStudyRoute>().caseStudyPath
@@ -40,11 +39,13 @@ class CaseStudyViewModel(
     private fun loadCaseStudy() {
         viewModelScope.launch {
             isLoading = true
-            repository.getCaseStudyByPath(caseStudyPath).onSuccess { caseStudy ->
-                handleSuccess(caseStudy)
-            }.onFailure {
-                handleFailure(it)
-            }
+            repository
+                .getCaseStudyByPath(caseStudyPath)
+                .onSuccess { caseStudy ->
+                    handleSuccess(caseStudy)
+                }.onFailure {
+                    handleFailure(it)
+                }
         }
     }
 
@@ -87,6 +88,14 @@ class CaseStudyViewModel(
         }
     }
 
+    fun toggleScenario() {
+        _uiState.update {
+            it.copy(
+                isScenarioExpanded = !it.isScenarioExpanded,
+            )
+        }
+    }
+
     private fun showRightAnswerFeedback() {
         _uiState.update {
             it.copy(
@@ -107,14 +116,13 @@ class CaseStudyViewModel(
         }
     }
 
-    data class ViewState (
+    data class ViewState(
         val caseStudy: CaseStudy? = null,
         val isLoading: Boolean = false,
         val showDialog: Boolean = false,
+        val isScenarioExpanded: Boolean = true,
         val dialogMessage: String? = null,
         val dialogVariant: FeedbackDialogVariant = FeedbackDialogVariant.WRONG_ANSWER,
         val error: Throwable? = null,
     )
-
-
 }

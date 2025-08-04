@@ -10,7 +10,7 @@ fun CuidardTechTheme(
 ) {
     MaterialTheme(
         colorScheme = LightColorScheme,
-        typography = CuidarTechTypography,
+        typography = getCuidarTechTypography(),
         content = content,
     )
 }

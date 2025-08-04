@@ -4,7 +4,6 @@ import br.com.cuidartech.app.ui.model.NursingDiagnosticListItem
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-
 @Serializable
 data class Subject(
     val id: String,
@@ -22,7 +21,7 @@ data class CaseStudy(
     val question: String?,
     val explanation: String,
     val helper: String,
-    val options: List<Alternative>
+    val options: List<Alternative>,
 )
 
 @Serializable

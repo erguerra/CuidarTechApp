@@ -20,14 +20,14 @@ class NursingProcessViewModel(
     private val nursingProcessRepository: NursingProcessRepository,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-
     private val _uiState: MutableStateFlow<ViewState> = MutableStateFlow(ViewState.Loading)
     val uiState: StateFlow<ViewState> = _uiState.asStateFlow()
 
-    private val _event: MutableSharedFlow<Event> = MutableSharedFlow(
-        replay = 0,
-        extraBufferCapacity = 1,
-    )
+    private val _event: MutableSharedFlow<Event> =
+        MutableSharedFlow(
+            replay = 0,
+            extraBufferCapacity = 1,
+        )
     val event: SharedFlow<Event> = _event.asSharedFlow()
 
     private val nursingProcessId = savedStateHandle.toRoute<Route.NursingProcessRoute>().nursingProcessId
@@ -42,26 +42,34 @@ class NursingProcessViewModel(
 
     private fun loadNursingProcess() {
         viewModelScope.launch {
-            nursingProcessRepository.getNursingProcessById(nursingProcessId).onSuccess { nursingProcess ->
-                val nursingProcessIdented = nursingProcess.copy(body = nursingProcess.body.replace("\\n", "\n"))
-                _uiState.update {
-                    ViewState.Success(nursingProcess = nursingProcessIdented)
+            nursingProcessRepository
+                .getNursingProcessById(nursingProcessId)
+                .onSuccess { nursingProcess ->
+                    val nursingProcessIdented = nursingProcess.copy(body = nursingProcess.body.replace("\\n", "\n"))
+                    _uiState.update {
+                        ViewState.Success(nursingProcess = nursingProcessIdented)
+                    }
+                }.onFailure {
+                    _uiState.update {
+                        ViewState.Error
+                    }
                 }
-            }.onFailure {
-                _uiState.update {
-                    ViewState.Error
-                }
-            }
         }
     }
 
     sealed interface ViewState {
-        data object Error: ViewState
-        data object Loading: ViewState
-        data class Success(val nursingProcess: NursingProcess) : ViewState
+        data object Error : ViewState
+
+        data object Loading : ViewState
+
+        data class Success(
+            val nursingProcess: NursingProcess,
+        ) : ViewState
     }
 
     sealed interface Event {
-        data class LaunchReferenceUrl(val url: String) : Event
+        data class LaunchReferenceUrl(
+            val url: String,
+        ) : Event
     }
 }

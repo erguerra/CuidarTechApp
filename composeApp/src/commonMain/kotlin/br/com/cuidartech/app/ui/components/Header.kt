@@ -21,10 +21,9 @@ fun Header(
     description: String? = null,
     descriptionColor: Color? = null,
 ) {
-
     Column(
         modifier = modifier.fillMaxWidth().padding(vertical = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         Text(
             text = title,
@@ -34,14 +33,11 @@ fun Header(
         )
 
         description?.let {
-            Text(
+            LargeText(
                 modifier = Modifier.fillMaxWidth(),
-                color = Color.DarkGray,
                 text = description,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Medium
+                color = descriptionColor ?: Color.DarkGray,
             )
         }
-
     }
 }

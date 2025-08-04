@@ -1,6 +1,5 @@
 package br.com.cuidartech.app.ui.nursingDiagnostic
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
@@ -12,14 +11,12 @@ fun NursingDiagnosticScreen(
     primaryColor: Long?,
     navigateBack: () -> Unit,
 ) {
-
     val viewModel: NursingDiagnosticViewModel = koinViewModel()
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     NursingDiagnosticContent(
         viewState = state,
         navigateBack = navigateBack,
-        primaryColor = primaryColor?.let { Color(it) }
+        primaryColor = primaryColor?.let { Color(it) },
     )
-
 }

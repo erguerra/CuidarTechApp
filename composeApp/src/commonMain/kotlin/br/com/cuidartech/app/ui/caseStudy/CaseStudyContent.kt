@@ -1,6 +1,23 @@
 package br.com.cuidartech.app.ui.caseStudy
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.FiniteAnimationSpec
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.SpringSpec
+import androidx.compose.animation.core.VisibilityThreshold
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.InteractionSource
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,19 +34,36 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.cuidartech.app.domain.model.Alternative
 import br.com.cuidartech.app.ui.components.CuidarTechAppBar
+import br.com.cuidartech.app.ui.components.LargeText
 import cuidartechapp.composeapp.generated.resources.Res
 import cuidartechapp.composeapp.generated.resources.icon_case_study
 import org.jetbrains.compose.resources.painterResource
@@ -42,8 +76,10 @@ fun CaseStudyContent(
     viewState: CaseStudyViewModel.ViewState,
     chooseAlternative: (Alternative) -> Unit,
     closeModal: () -> Unit,
+    toggleScenario: () -> Unit,
     navigateBack: () -> Unit,
 ) {
+    val customColor = primaryColor ?: MaterialTheme.colorScheme.primary
     Scaffold(
         topBar = {
             CuidarTechAppBar(
@@ -51,7 +87,7 @@ fun CaseStudyContent(
                 contentColor = primaryColor,
                 navigateBackAction = navigateBack,
             )
-        }
+        },
     ) { paddingValues ->
 
         Box(
@@ -60,98 +96,109 @@ fun CaseStudyContent(
         ) {
             when {
                 viewState.error != null -> viewState.error.message?.let { Text(it) }
-                viewState.isLoading -> CircularProgressIndicator(
-                    color = primaryColor ?: MaterialTheme.colorScheme.primary,
-                )
+                viewState.isLoading ->
+                    CircularProgressIndicator(
+                        color = customColor,
+                    )
 
                 !viewState.isLoading && viewState.caseStudy != null -> {
                     val stateVertical = rememberScrollState(0)
                     Column(
-                        modifier = Modifier.fillMaxSize().verticalScroll(
-                            stateVertical
-                        ).padding(16.dp),
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .verticalScroll(
+                                    stateVertical,
+                                ).padding(16.dp),
                     ) {
-                        primaryColor?.copy(alpha = 0.08f)?.let {
-                            Surface(
-                                modifier = Modifier.fillMaxWidth(),
-                                shape = MaterialTheme.shapes.large,
-                                color = it,
-                                border = BorderStroke(2.dp, primaryColor)
+//                        Surface(
+//                            modifier = Modifier.fillMaxWidth(),
+//                            shape = MaterialTheme.shapes.large,
+//                            color = MaterialTheme.colorScheme.background,
+//                            border = BorderStroke(
+//                                2.dp,
+//                                customColor,
+//                            )
+//                        ) {
+                        val interactionSource = remember { MutableInteractionSource() }
+                        Column(
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .clickable(
+                                        interactionSource = interactionSource,
+                                        indication = null,
+                                        onClick = toggleScenario,
+                                    ).animateContentSize(),
+                        ) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                verticalAlignment = Alignment.CenterVertically,
                             ) {
-                                Column(
-                                    modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp)
+                                Icon(
+                                    modifier = Modifier.size(42.dp),
+                                    painter = painterResource(Res.drawable.icon_case_study),
+                                    tint = customColor,
+                                    contentDescription = "Estudo de Caso",
+                                )
+                                Text(
+                                    text = "Cenário",
+                                    style = MaterialTheme.typography.headlineLarge,
+                                    fontWeight = FontWeight.Bold,
+                                    color = customColor,
+                                )
+                                Row(
+                                    modifier = Modifier.weight(1f),
+                                    horizontalArrangement = Arrangement.End,
                                 ) {
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
-                                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                        verticalAlignment = Alignment.CenterVertically,
-                                    ) {
-                                        Icon(
-                                            modifier = Modifier.size(42.dp),
-                                            painter = painterResource(Res.drawable.icon_case_study),
-                                            tint = primaryColor,
-                                            contentDescription = "Estudo de Caso",
-                                        )
-                                        Text(
-                                            text = "Cenário",
-                                            style = MaterialTheme.typography.headlineLarge,
-                                            fontWeight = FontWeight.Bold,
-                                            color = primaryColor,
-                                        )
-                                    }
-                                    Spacer(Modifier.size(24.dp))
-
-                                    Text(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        color = Color.DarkGray,
-                                        text = viewState.caseStudy.intro,
-                                        fontSize = 18.sp,
-                                        fontWeight = FontWeight.Medium
-                                    )
-
-                                    Spacer(Modifier.size(16.dp))
+                                    RotatingArrow(viewState.isScenarioExpanded)
                                 }
+                            }
+                            Spacer(Modifier.size(16.dp))
 
+                            AnimatedVisibility(
+                                visible = viewState.isScenarioExpanded,
+                                enter = fadeIn(tween(500)),
+                                exit = fadeOut(tween(500)),
+                            ) {
+                                Spacer(Modifier.size(8.dp))
+                                LargeText(
+                                    modifier =
+                                        Modifier
+                                            .fillMaxWidth()
+                                            .padding(horizontal = 4.dp),
+                                    text = viewState.caseStudy.intro,
+                                )
+
+                                Spacer(Modifier.size(16.dp))
                             }
                         }
+
+//                        }
                         Spacer(Modifier.size(24.dp))
 
-                        viewState.caseStudy.question?.let { question ->
-                            Text(
-                                modifier = Modifier.align(Alignment.CenterHorizontally),
-                                text = question,
-                                textAlign = TextAlign.Center,
-                                style = MaterialTheme.typography.bodyLarge,
-                                fontSize = 20.sp,
-                                fontWeight = FontWeight.SemiBold,
-                                color = primaryColor ?: MaterialTheme.colorScheme.primary,
+                        val question =
+                            viewState.caseStudy.question ?: "Escolha uma das alternativas abaixo"
 
-                                )
-                            Spacer(Modifier.size(24.dp))
-                        }
+                        Text(
+                            text = question,
+                            textAlign = TextAlign.Start,
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = customColor,
+                        )
+                        Spacer(Modifier.size(24.dp))
 
                         viewState.caseStudy.options.forEach { alternative ->
-                            Surface(
-                                color = primaryColor ?: MaterialTheme.colorScheme.surface,
-                                shape = MaterialTheme.shapes.medium,
-                                onClick = { chooseAlternative(alternative) }
-                            ) {
-                                Box(
-                                    modifier = Modifier.fillMaxWidth().padding(
-                                        horizontal = 16.dp,
-                                        vertical = 8.dp,
-                                    ),
-                                    contentAlignment = Alignment.Center,
-                                ) {
-                                    Text(
-                                        text = alternative.content,
-                                        textAlign = TextAlign.Center,
-                                        fontWeight = FontWeight.SemiBold,
-                                        fontSize = 20.sp,
-                                        color = MaterialTheme.colorScheme.onPrimary,
-                                    )
-                                }
-                            }
+                            Alternative(
+                                text = alternative.content,
+                                primaryColor = customColor,
+                                onClick = {
+                                    chooseAlternative(alternative)
+                                },
+                            )
 
                             Spacer(Modifier.size(8.dp))
                         }
@@ -159,15 +206,66 @@ fun CaseStudyContent(
                 }
             }
 
-            if(viewState.showDialog) {
+            if (viewState.showDialog) {
                 FeedbackDialog(
                     variant = viewState.dialogVariant,
                     content = viewState.dialogMessage.orEmpty(),
-                    primaryColor = primaryColor ?: MaterialTheme.colorScheme.primary,
+                    primaryColor = customColor,
                     close = closeModal,
                 )
             }
         }
-
     }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+private fun Alternative(
+    text: String,
+    primaryColor: Color,
+    onClick: () -> Unit,
+) {
+    Surface(
+        color = MaterialTheme.colorScheme.background,
+        border =
+            BorderStroke(
+                1.dp,
+                primaryColor,
+            ),
+        shape = MaterialTheme.shapes.medium,
+        onClick = onClick,
+        elevation = (-2).dp,
+    ) {
+        Box(
+            modifier =
+                Modifier.fillMaxWidth().padding(
+                    horizontal = 16.dp,
+                    vertical = 8.dp,
+                ),
+        ) {
+            Text(
+                text = text,
+                textAlign = TextAlign.Start,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 20.sp,
+                lineHeight = 32.sp,
+                color = MaterialTheme.colorScheme.onBackground,
+            )
+        }
+    }
+}
+
+@Composable
+fun RotatingArrow(isExpanded: Boolean) {
+    val rotationAngle by animateFloatAsState(
+        targetValue = if (isExpanded) 90f else 0f,
+        animationSpec = tween(durationMillis = 300),
+    )
+
+    Icon(
+        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight, // points right
+        modifier = Modifier.size(36.dp).rotate(rotationAngle),
+        tint = MaterialTheme.colorScheme.onBackground,
+        contentDescription = "Expandir",
+    )
 }

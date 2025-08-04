@@ -16,7 +16,6 @@ class NursingDiagnosticViewModel(
     private val repository: SubjectRepository,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow<ViewState>(ViewState.Loading)
     val uiState = _uiState.asStateFlow()
 
@@ -28,23 +27,27 @@ class NursingDiagnosticViewModel(
 
     private fun loadDiagnostic() {
         viewModelScope.launch {
-            repository.getNursingDiagnosticByPath(nursingDiagnosticPath).onSuccess { nursingDiagnostic ->
-                _uiState.update {
-                    ViewState.Success(nursingDiagnostic)
+            repository
+                .getNursingDiagnosticByPath(nursingDiagnosticPath)
+                .onSuccess { nursingDiagnostic ->
+                    _uiState.update {
+                        ViewState.Success(nursingDiagnostic)
+                    }
+                }.onFailure {
+                    _uiState.update {
+                        ViewState.Error
+                    }
                 }
-            }.onFailure {
-                _uiState.update {
-                    ViewState.Error
-                }
-            }
         }
     }
 
-
     sealed interface ViewState {
         data object Loading : ViewState
-        data object Error : ViewState
-        data class Success(val nursingDiagnostic: NursingDiagnostic) : ViewState
-    }
 
+        data object Error : ViewState
+
+        data class Success(
+            val nursingDiagnostic: NursingDiagnostic,
+        ) : ViewState
+    }
 }

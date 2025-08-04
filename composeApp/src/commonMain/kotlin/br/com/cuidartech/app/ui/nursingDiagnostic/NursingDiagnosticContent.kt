@@ -40,7 +40,6 @@ fun NursingDiagnosticContent(
     primaryColor: Color?,
     navigateBack: () -> Unit,
 ) {
-
     Scaffold(
         topBar = {
             CuidarTechAppBar(
@@ -48,7 +47,7 @@ fun NursingDiagnosticContent(
                 contentColor = primaryColor,
                 navigateBackAction = navigateBack,
             )
-        }
+        },
     ) { paddingValues ->
         Box(
             modifier = Modifier.fillMaxSize().padding(top = paddingValues.calculateTopPadding()),
@@ -56,26 +55,30 @@ fun NursingDiagnosticContent(
         ) {
             when (viewState) {
                 is NursingDiagnosticViewModel.ViewState.Error -> Text("Deu merda!")
-                is NursingDiagnosticViewModel.ViewState.Loading -> CircularProgressIndicator(
-                    color = primaryColor ?: MaterialTheme.colorScheme.primary,
-                )
+                is NursingDiagnosticViewModel.ViewState.Loading ->
+                    CircularProgressIndicator(
+                        color = primaryColor ?: MaterialTheme.colorScheme.primary,
+                    )
 
                 is NursingDiagnosticViewModel.ViewState.Success -> {
                     val stateVertical = rememberScrollState(0)
                     Column(
-                        modifier = Modifier.fillMaxSize().verticalScroll(
-                            stateVertical
-                        ).padding(16.dp),
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .verticalScroll(
+                                    stateVertical,
+                                ).padding(16.dp),
                     ) {
                         primaryColor?.copy(alpha = 0.08f)?.let { safePrimaryColor ->
                             Surface(
                                 modifier = Modifier.fillMaxWidth(),
                                 shape = MaterialTheme.shapes.large,
                                 color = safePrimaryColor,
-                                border = BorderStroke(2.dp, primaryColor)
+                                border = BorderStroke(2.dp, primaryColor),
                             ) {
                                 Column(
-                                    modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp)
+                                    modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
                                 ) {
                                     Row(
                                         modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
@@ -101,7 +104,7 @@ fun NursingDiagnosticContent(
                                         style = MaterialTheme.typography.bodyLarge,
                                         fontSize = 20.sp,
                                         fontWeight = FontWeight.SemiBold,
-                                        color = primaryColor
+                                        color = primaryColor,
                                     )
 
                                     Spacer(Modifier.size(24.dp))
@@ -110,12 +113,11 @@ fun NursingDiagnosticContent(
                                         color = Color.DarkGray,
                                         text = viewState.nursingDiagnostic.description,
                                         fontSize = 18.sp,
-                                        fontWeight = FontWeight.Medium
+                                        fontWeight = FontWeight.Medium,
                                     )
 
                                     Spacer(Modifier.size(16.dp))
                                 }
-
                             }
                         }
                         Spacer(Modifier.size(24.dp))
@@ -123,14 +125,17 @@ fun NursingDiagnosticContent(
                         Surface(
                             color = MaterialTheme.colorScheme.surface,
                             shape = MaterialTheme.shapes.medium,
-                            border = BorderStroke(
-                                1.dp,
-                                (primaryColor
-                                    ?: MaterialTheme.colorScheme.primary).copy(alpha = 0.5f)
-                            )
+                            border =
+                                BorderStroke(
+                                    1.dp,
+                                    (
+                                        primaryColor
+                                            ?: MaterialTheme.colorScheme.primary
+                                    ).copy(alpha = 0.5f),
+                                ),
                         ) {
                             Column(
-                                modifier = Modifier.padding(16.dp)
+                                modifier = Modifier.padding(16.dp),
                             ) {
                                 Row(
                                     modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
@@ -154,7 +159,6 @@ fun NursingDiagnosticContent(
 
                                 Spacer(Modifier.size(24.dp))
 
-
                                 viewState.nursingDiagnostic.interventions.forEach { intervention ->
 
                                     Row(
@@ -165,8 +169,9 @@ fun NursingDiagnosticContent(
                                         Icon(
                                             modifier = Modifier.size(20.dp).alignByBaseline(),
                                             painter = painterResource(Res.drawable.icon_intervention),
-                                            tint = primaryColor
-                                                ?: MaterialTheme.colorScheme.primary,
+                                            tint =
+                                                primaryColor
+                                                    ?: MaterialTheme.colorScheme.primary,
                                             contentDescription = "Intervenção",
                                         )
                                         Text(
@@ -181,11 +186,9 @@ fun NursingDiagnosticContent(
                                 Spacer(Modifier.size(8.dp))
                             }
                         }
-
                     }
                 }
             }
         }
     }
-
 }

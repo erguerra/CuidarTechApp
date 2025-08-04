@@ -1,6 +1,15 @@
 package br.com.cuidartech.app.app
 
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideIn
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOut
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavHost
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -28,20 +37,38 @@ fun App() {
         ) {
             navigation<Route.CuidarTechGraphRoute>(
                 startDestination = Route.HomeRoute,
+                enterTransition = {
+                    slideInHorizontally(
+                        spring(
+                            stiffness = Spring.StiffnessMediumLow,
+                        ),
+                    ) { it }
+                },
+                exitTransition = {
+                    slideOutHorizontally(
+                        spring(
+                            stiffness = Spring.StiffnessMediumLow,
+                        ),
+                    ) { it }
+                },
             ) {
                 composable<Route.HomeRoute> {
                     HomeScreen(
                         goToNursingProcessList = { navController.navigate(Route.NursingProcessListRoute) },
                         goToCaseStudyList = { subjectId, title, primaryColor ->
                             navController.navigate(
-                                Route.CaseStudyListRoute(subjectId, title, primaryColorLong = primaryColor)
+                                Route.CaseStudyListRoute(
+                                    subjectId,
+                                    title,
+                                    primaryColorLong = primaryColor,
+                                ),
                             )
                         },
                         goToDiagnosticList = { subjectId, title, primaryColor ->
                             navController.navigate(
-                                Route.DiagnosticListRoute(subjectId, title, primaryColor)
+                                Route.DiagnosticListRoute(subjectId, title, primaryColor),
                             )
-                        }
+                        },
                     )
                 }
                 composable<Route.NursingProcessListRoute> {
@@ -49,9 +76,9 @@ fun App() {
                         navigateBack = navController::navigateUp,
                         navigateToItem = { processId ->
                             navController.navigate(
-                                Route.NursingProcessRoute(processId)
+                                Route.NursingProcessRoute(processId),
                             )
-                        }
+                        },
                     )
                 }
                 composable<Route.CaseStudyListRoute> { entry ->
@@ -62,9 +89,9 @@ fun App() {
                         navigateBack = navController::navigateUp,
                         navigateToAnItem = { caseStudyPath, title, primaryColorLong ->
                             navController.navigate(
-                                Route.CaseStudyRoute(caseStudyPath, title, primaryColorLong)
+                                Route.CaseStudyRoute(caseStudyPath, title, primaryColorLong),
                             )
-                        }
+                        },
                     )
                 }
                 composable<Route.DiagnosticListRoute> { entry ->
@@ -76,9 +103,9 @@ fun App() {
                         navigateBack = navController::navigateUp,
                         navigateToAnItem = { diagnosticPath, primaryColorLong ->
                             navController.navigate(
-                                Route.DiagnosticRoute(diagnosticPath, primaryColorLong)
+                                Route.DiagnosticRoute(diagnosticPath, primaryColorLong),
                             )
-                        }
+                        },
                     )
                 }
                 composable<Route.CaseStudyRoute> { entry ->
@@ -97,15 +124,13 @@ fun App() {
                         primaryColor = args.primaryColorLong,
                         navigateBack = navController::navigateUp,
                     )
-
                 }
                 composable<Route.NursingProcessRoute> {
                     NursingProcessScreen(
-                        navigateBack = navController::navigateUp
+                        navigateBack = navController::navigateUp,
                     )
                 }
             }
         }
     }
 }
-

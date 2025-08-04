@@ -13,11 +13,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
-import androidx.compose.material3.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,7 +40,6 @@ fun CaseStudyListContent(
     viewState: CaseStudyListViewModel.ViewState,
     onItemClick: (studyCaseId: String, title: String, primaryColor: Long?) -> Unit,
 ) {
-
     Scaffold(
         topBar = {
             CuidarTechAppBar(
@@ -48,78 +47,83 @@ fun CaseStudyListContent(
                 navigateBackAction = navigateBack,
                 contentColor = primaryColor,
             )
-        }
+        },
     ) { paddingValues ->
 
         when (viewState) {
-            is CaseStudyListViewModel.ViewState.Loading -> CircularProgressIndicator(
-                color = primaryColor ?: MaterialTheme.colorScheme.primary,
-            )
+            is CaseStudyListViewModel.ViewState.Loading ->
+                CircularProgressIndicator(
+                    color = primaryColor ?: MaterialTheme.colorScheme.primary,
+                )
             is CaseStudyListViewModel.ViewState.Error -> Text("Que merda tá acontecendo????")
-            is CaseStudyListViewModel.ViewState.Success -> LazyColumn(
-                contentPadding = PaddingValues(
-                    start = 16.dp,
-                    end = 16.dp,
-                    top = paddingValues.calculateTopPadding(),
-                    bottom = 16.dp,
-                ),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                item {
-                    Header(
-                        title = title,
-                        titleColor = primaryColor,
-                        description = "Leia atentamente as informações do Estudo de Caso e selecione uma das opções de diagnóstico apresentadas. Caso a opção esteja incorreta, você visualizará uma dica para a seleção do diagnóstico adequado."
-                    )
-                    Spacer(Modifier.size(24.dp))
-                }
+            is CaseStudyListViewModel.ViewState.Success ->
+                LazyColumn(
+                    contentPadding =
+                        PaddingValues(
+                            start = 16.dp,
+                            end = 16.dp,
+                            top = paddingValues.calculateTopPadding(),
+                            bottom = 16.dp,
+                        ),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    item {
+                        Header(
+                            title = title,
+                            titleColor = primaryColor,
+                            description = "Leia atentamente as informações do Estudo de Caso e selecione uma das opções de diagnóstico apresentadas. Caso a opção esteja incorreta, você visualizará uma dica para a seleção do diagnóstico adequado.",
+                        )
+                        Spacer(Modifier.size(24.dp))
+                    }
 
-                items(viewState.caseStudies, key = { it.id }) {
-                    Surface(
-                        color = primaryColor ?: MaterialTheme.colorScheme.surface,
-                        shape = MaterialTheme.shapes.medium,
-                        onClick = {
-                            onItemClick(
-                                it.remoteId,
-                                "Estudo de Caso ${it.id}",
-                                primaryColor?.toArgb()?.toLong(),
-                            )
-                        }
-                    ) {
-                        Column(
-                            modifier = Modifier.fillMaxWidth()
-                                .padding(horizontal = 8.dp, vertical = 16.dp),
-                            verticalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                verticalAlignment = Alignment.CenterVertically,
-                            ) {
-                                Icon(
-                                    modifier = Modifier.size(42.dp),
-                                    painter = painterResource(Res.drawable.icon_case_study),
-                                    tint = MaterialTheme.colorScheme.onPrimary,
-                                    contentDescription = "Estudo de Caso",
+                    items(viewState.caseStudies, key = { it.id }) {
+                        Surface(
+                            color = primaryColor ?: MaterialTheme.colorScheme.surface,
+                            shape = MaterialTheme.shapes.medium,
+                            onClick = {
+                                onItemClick(
+                                    it.remoteId,
+                                    "Estudo de Caso ${it.id}",
+                                    primaryColor?.toArgb()?.toLong(),
                                 )
+                            },
+                        ) {
+                            Column(
+                                modifier =
+                                    Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 8.dp, vertical = 16.dp),
+                                verticalArrangement = Arrangement.spacedBy(8.dp),
+                            ) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                ) {
+                                    Icon(
+                                        modifier = Modifier.size(42.dp),
+                                        painter = painterResource(Res.drawable.icon_case_study),
+                                        tint = MaterialTheme.colorScheme.onPrimary,
+                                        contentDescription = "Estudo de Caso",
+                                    )
+                                    Text(
+                                        text = "Estudo de Caso ${it.id}",
+                                        style = MaterialTheme.typography.headlineSmall,
+                                        color = MaterialTheme.colorScheme.onPrimary,
+                                    )
+                                }
                                 Text(
-                                    text = "Estudo de Caso ${it.id}",
-                                    style = MaterialTheme.typography.headlineSmall,
+                                    modifier = Modifier.padding(horizontal = 8.dp),
+                                    text = it.intro,
+                                    maxLines = 2,
+                                    overflow = TextOverflow.Ellipsis,
                                     color = MaterialTheme.colorScheme.onPrimary,
+                                    style = MaterialTheme.typography.bodyMedium,
                                 )
                             }
-                            Text(
-                                modifier = Modifier.padding(horizontal = 8.dp),
-                                text = it.intro,
-                                maxLines = 2,
-                                overflow = TextOverflow.Ellipsis,
-                                color = MaterialTheme.colorScheme.onPrimary,
-                                style = MaterialTheme.typography.bodyMedium,
-                            )
                         }
                     }
                 }
-            }
         }
     }
 }

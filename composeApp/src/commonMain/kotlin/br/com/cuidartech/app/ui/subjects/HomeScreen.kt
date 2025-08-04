@@ -11,7 +11,6 @@ fun HomeScreen(
     goToCaseStudyList: (subjectId: String, title: String, primaryColor: Long?) -> Unit,
     goToNursingProcessList: () -> Unit,
 ) {
-
     val viewModel: HomeViewModel = koinViewModel()
     val state by viewModel.viewState.collectAsStateWithLifecycle()
 

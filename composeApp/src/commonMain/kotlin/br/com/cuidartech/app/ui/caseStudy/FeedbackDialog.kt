@@ -30,6 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import br.com.cuidartech.app.ui.components.LargeText
 
 @Composable
 fun FeedbackDialog(
@@ -40,7 +41,7 @@ fun FeedbackDialog(
     close: () -> Unit,
 ) {
     Dialog(
-        onDismissRequest = close
+        onDismissRequest = close,
     ) {
         Surface(
             modifier = Modifier.fillMaxWidth(),
@@ -50,25 +51,30 @@ fun FeedbackDialog(
         ) {
             val scrollState = rememberScrollState(0)
             Column(
-                modifier = Modifier.fillMaxWidth().verticalScroll(scrollState)
-                    .padding(horizontal = 8.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .verticalScroll(scrollState)
+                        .padding(horizontal = 8.dp),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                val (title, color, icon) =
+                    when (variant) {
+                        FeedbackDialogVariant.WRONG_ANSWER ->
+                            Triple(
+                                "Resposta Errada",
+                                Color.Red.copy(alpha = 0.7f),
+                                Icons.Default.Warning,
+                            )
 
-                ) {
-                val (title, color, icon) = when (variant) {
-                    FeedbackDialogVariant.WRONG_ANSWER -> Triple(
-                        "Resposta Errada",
-                        Color.Red.copy(alpha = 0.7f),
-                        Icons.Default.Warning
-                    )
-
-                    FeedbackDialogVariant.RIGHT_ANSWER -> Triple(
-                        "Resposta Certa!",
-                        primaryColor,
-                        Icons.Default.Check
-                    )
-                }
+                        FeedbackDialogVariant.RIGHT_ANSWER ->
+                            Triple(
+                                "Resposta Certa!",
+                                primaryColor,
+                                Icons.Default.Check,
+                            )
+                    }
                 Row(
                     modifier = Modifier.padding(top = 16.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -89,13 +95,13 @@ fun FeedbackDialog(
                 }
                 Spacer(Modifier.size(24.dp))
 
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center,
-                    color = Color.DarkGray,
+                LargeText(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.CenterHorizontally)
+                            .padding(horizontal = 4.dp),
                     text = content,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Medium
                 )
 
                 Spacer(Modifier.size(16.dp))
@@ -104,15 +110,15 @@ fun FeedbackDialog(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center,
                 ) {
-
                     TextButton(
                         onClick = close,
                         modifier = Modifier.padding(8.dp),
                     ) {
-                        val dismissAction = when (variant) {
-                            FeedbackDialogVariant.RIGHT_ANSWER -> "Concluir"
-                            FeedbackDialogVariant.WRONG_ANSWER -> "Tentar Novamente"
-                        }
+                        val dismissAction =
+                            when (variant) {
+                                FeedbackDialogVariant.RIGHT_ANSWER -> "Concluir"
+                                FeedbackDialogVariant.WRONG_ANSWER -> "Tentar Novamente"
+                            }
                         Text(
                             text = dismissAction,
                             style = MaterialTheme.typography.labelMedium,
@@ -121,7 +127,6 @@ fun FeedbackDialog(
                         )
                     }
                 }
-
             }
         }
     }

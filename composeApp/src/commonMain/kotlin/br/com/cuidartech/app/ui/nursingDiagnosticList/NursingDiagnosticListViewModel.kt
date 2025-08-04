@@ -19,7 +19,6 @@ class NursingDiagnosticListViewModel(
     private val nursingDiagnosticUIModelMapper: NursingDiagnosticUIModelMapper,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow<ViewState>(ViewState.Loading)
     val uiState: StateFlow<ViewState> = _uiState.asStateFlow()
 
@@ -27,22 +26,27 @@ class NursingDiagnosticListViewModel(
 
     fun getDiagnosticList() {
         viewModelScope.launch {
-            repository.getNursingDiagnosticsBySubject(subjectId).onSuccess { diagnosticList ->
-                val uiList =
-                    nursingDiagnosticUIModelMapper.transformToCategorizedList(diagnosticList)
-                _uiState.update {
-                    ViewState.Success(uiList)
+            repository
+                .getNursingDiagnosticsBySubject(subjectId)
+                .onSuccess { diagnosticList ->
+                    val uiList =
+                        nursingDiagnosticUIModelMapper.transformToCategorizedList(diagnosticList)
+                    _uiState.update {
+                        ViewState.Success(uiList)
+                    }
+                }.onFailure {
+                    _uiState.update { ViewState.Error }
                 }
-            }.onFailure {
-                _uiState.update { ViewState.Error }
-            }
         }
     }
 
-
     sealed interface ViewState {
-        data class Success(val diagnosticList: List<NursingDiagnosticListItem>) : ViewState
+        data class Success(
+            val diagnosticList: List<NursingDiagnosticListItem>,
+        ) : ViewState
+
         data object Loading : ViewState
+
         data object Error : ViewState
     }
 }

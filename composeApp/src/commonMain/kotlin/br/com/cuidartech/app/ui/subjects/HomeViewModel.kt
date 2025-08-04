@@ -12,7 +12,6 @@ import kotlinx.coroutines.launch
 class HomeViewModel(
     private val subjectRepository: SubjectRepository,
 ) : ViewModel() {
-
     private val _viewState = MutableStateFlow<ViewState>(ViewState.Loading)
     val viewState = _viewState.asStateFlow()
 
@@ -22,17 +21,23 @@ class HomeViewModel(
 
     private fun loadSubjects() {
         viewModelScope.launch {
-            subjectRepository.getSubjects().onSuccess { subjectList ->
-                _viewState.update { ViewState.Success(subjectList) }
-            }.onFailure {
-                _viewState.update { ViewState.Error }
-            }
+            subjectRepository
+                .getSubjects()
+                .onSuccess { subjectList ->
+                    _viewState.update { ViewState.Success(subjectList) }
+                }.onFailure {
+                    _viewState.update { ViewState.Error }
+                }
         }
     }
 
     sealed interface ViewState {
-        data class Success (val subjectList: List<Subject>): ViewState
-        data object Loading: ViewState
-        data object Error: ViewState
+        data class Success(
+            val subjectList: List<Subject>,
+        ) : ViewState
+
+        data object Loading : ViewState
+
+        data object Error : ViewState
     }
 }

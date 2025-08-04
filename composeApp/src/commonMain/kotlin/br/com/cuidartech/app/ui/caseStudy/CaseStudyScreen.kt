@@ -12,17 +12,16 @@ fun CaseStudyScreen(
     primaryColorLong: Long?,
     navigateBack: () -> Unit,
 ) {
-
     val viewModel: CaseStudyViewModel = koinViewModel()
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     CaseStudyContent(
         title = title,
-        primaryColor = primaryColorLong?.run {  Color(this) },
+        primaryColor = primaryColorLong?.run { Color(this) },
         viewState = state,
         navigateBack = navigateBack,
         chooseAlternative = viewModel::evaluateAnswer,
+        toggleScenario = viewModel::toggleScenario,
         closeModal = viewModel::closeDialog,
     )
-
 }
