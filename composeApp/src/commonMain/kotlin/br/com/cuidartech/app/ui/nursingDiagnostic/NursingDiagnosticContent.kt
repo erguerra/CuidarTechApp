@@ -28,6 +28,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.cuidartech.app.ui.components.CuidarTechAppBar
+import br.com.cuidartech.app.ui.components.LargeText
 import cuidartechapp.composeapp.generated.resources.Res
 import cuidartechapp.composeapp.generated.resources.icon_intervention
 import cuidartechapp.composeapp.generated.resources.icon_nursing_diagnostic
@@ -71,67 +72,57 @@ fun NursingDiagnosticContent(
                                 ).padding(16.dp),
                     ) {
                         primaryColor?.copy(alpha = 0.08f)?.let { safePrimaryColor ->
-                            Surface(
+                            Column(
                                 modifier = Modifier.fillMaxWidth(),
-                                shape = MaterialTheme.shapes.large,
-                                color = safePrimaryColor,
-                                border = BorderStroke(2.dp, primaryColor),
                             ) {
-                                Column(
-                                    modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+                                Row(
+                                    modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
                                 ) {
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
-                                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                        verticalAlignment = Alignment.CenterVertically,
-                                    ) {
-                                        Icon(
-                                            modifier = Modifier.size(42.dp),
-                                            painter = painterResource(Res.drawable.icon_nursing_diagnostic),
-                                            tint = primaryColor,
-                                            contentDescription = "Diagnóstico",
-                                        )
-                                        Text(
-                                            text = viewState.nursingDiagnostic.title,
-                                            style = MaterialTheme.typography.headlineLarge,
-                                            fontWeight = FontWeight.Bold,
-                                            color = primaryColor,
-                                        )
-                                    }
-                                    Spacer(Modifier.size(16.dp))
-                                    Text(
-                                        text = "Categoria: ${viewState.nursingDiagnostic.category}",
-                                        style = MaterialTheme.typography.bodyLarge,
-                                        fontSize = 20.sp,
-                                        fontWeight = FontWeight.SemiBold,
-                                        color = primaryColor,
+                                    Icon(
+                                        modifier = Modifier.size(42.dp),
+                                        painter = painterResource(Res.drawable.icon_nursing_diagnostic),
+                                        tint = primaryColor,
+                                        contentDescription = "Diagnóstico",
                                     )
-
-                                    Spacer(Modifier.size(24.dp))
                                     Text(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        color = Color.DarkGray,
-                                        text = viewState.nursingDiagnostic.description,
-                                        fontSize = 18.sp,
-                                        fontWeight = FontWeight.Medium,
+                                        text = viewState.nursingDiagnostic.title,
+                                        style = MaterialTheme.typography.headlineSmall,
+                                        fontWeight = FontWeight.Bold,
+                                        color = MaterialTheme.colorScheme.onBackground,
                                     )
-
-                                    Spacer(Modifier.size(16.dp))
                                 }
+                                Spacer(Modifier.size(16.dp))
+                                Text(
+                                    text = "Categoria: ${viewState.nursingDiagnostic.category}",
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    fontSize = 20.sp,
+                                    fontWeight = FontWeight.SemiBold,
+                                    color = primaryColor,
+                                )
+
+                                Spacer(Modifier.size(24.dp))
+                                LargeText(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    text = viewState.nursingDiagnostic.description,
+                                )
+
+                                Spacer(Modifier.size(16.dp))
                             }
                         }
                         Spacer(Modifier.size(24.dp))
 
                         Surface(
-                            color = MaterialTheme.colorScheme.surface,
+                            color = MaterialTheme.colorScheme.background,
                             shape = MaterialTheme.shapes.medium,
                             border =
                                 BorderStroke(
                                     1.dp,
                                     (
-                                        primaryColor
-                                            ?: MaterialTheme.colorScheme.primary
-                                    ).copy(alpha = 0.5f),
+                                            primaryColor
+                                                ?: MaterialTheme.colorScheme.primary
+                                            ).copy(alpha = 0.5f),
                                 ),
                         ) {
                             Column(
@@ -147,7 +138,7 @@ fun NursingDiagnosticContent(
                                         style = MaterialTheme.typography.bodyLarge,
                                         fontSize = 24.sp,
                                         fontWeight = FontWeight.SemiBold,
-                                        color = primaryColor ?: MaterialTheme.colorScheme.primary,
+                                        color = MaterialTheme.colorScheme.onSurface,
                                     )
                                     Icon(
                                         modifier = Modifier.size(42.dp),

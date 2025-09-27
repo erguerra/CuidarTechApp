@@ -6,8 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import br.com.cuidartech.app.app.App
+import br.com.cuidartech.app.di.initKoin
 import com.google.firebase.Firebase
 import com.google.firebase.initialize
+import org.koin.core.context.GlobalContext
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,5 +25,9 @@ class MainActivity : ComponentActivity() {
 @Preview
 @Composable
 fun AppAndroidPreview() {
+    // For preview, we need to make sure Koin is initialized
+    if (GlobalContext.getOrNull() == null) {
+        initKoin()
+    }
     App()
 }

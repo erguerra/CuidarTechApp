@@ -2,6 +2,7 @@ package br.com.cuidartech.app.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
@@ -20,17 +21,25 @@ fun Header(
     titleColor: Color? = null,
     description: String? = null,
     descriptionColor: Color? = null,
+    leadingIcon: @Composable (() -> Unit)? = null
 ) {
     Column(
         modifier = modifier.fillMaxWidth().padding(vertical = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        Text(
-            text = title,
-            style = MaterialTheme.typography.headlineLarge,
-            fontWeight = FontWeight.Bold,
-            color = titleColor ?: MaterialTheme.colorScheme.primary,
-        )
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ){
+            leadingIcon?.invoke()
+            Text(
+                text = title,
+                style = MaterialTheme.typography.headlineLarge,
+                fontWeight = FontWeight.Bold,
+                color = titleColor ?: MaterialTheme.colorScheme.primary,
+            )
+        }
+
 
         description?.let {
             LargeText(

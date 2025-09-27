@@ -1,5 +1,6 @@
 package br.com.cuidartech.app.ui.caseStudyList
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -55,6 +56,7 @@ fun CaseStudyListContent(
                 CircularProgressIndicator(
                     color = primaryColor ?: MaterialTheme.colorScheme.primary,
                 )
+
             is CaseStudyListViewModel.ViewState.Error -> Text("Que merda tá acontecendo????")
             is CaseStudyListViewModel.ViewState.Success ->
                 LazyColumn(
@@ -78,8 +80,13 @@ fun CaseStudyListContent(
 
                     items(viewState.caseStudies, key = { it.id }) {
                         Surface(
-                            color = primaryColor ?: MaterialTheme.colorScheme.surface,
+                            color = MaterialTheme.colorScheme.background,
                             shape = MaterialTheme.shapes.medium,
+                            elevation = 2.dp,
+                            border = BorderStroke(
+                                1.dp,
+                                primaryColor ?: MaterialTheme.colorScheme.primary,
+                            ),
                             onClick = {
                                 onItemClick(
                                     it.remoteId,
@@ -89,8 +96,7 @@ fun CaseStudyListContent(
                             },
                         ) {
                             Column(
-                                modifier =
-                                    Modifier
+                                modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(horizontal = 8.dp, vertical = 16.dp),
                                 verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -103,13 +109,13 @@ fun CaseStudyListContent(
                                     Icon(
                                         modifier = Modifier.size(42.dp),
                                         painter = painterResource(Res.drawable.icon_case_study),
-                                        tint = MaterialTheme.colorScheme.onPrimary,
+                                        tint = primaryColor ?: MaterialTheme.colorScheme.primary,
                                         contentDescription = "Estudo de Caso",
                                     )
                                     Text(
                                         text = "Estudo de Caso ${it.id}",
                                         style = MaterialTheme.typography.headlineSmall,
-                                        color = MaterialTheme.colorScheme.onPrimary,
+                                        color = primaryColor ?: MaterialTheme.colorScheme.primary,
                                     )
                                 }
                                 Text(
@@ -117,7 +123,7 @@ fun CaseStudyListContent(
                                     text = it.intro,
                                     maxLines = 2,
                                     overflow = TextOverflow.Ellipsis,
-                                    color = MaterialTheme.colorScheme.onPrimary,
+                                    color = MaterialTheme.colorScheme.onBackground,
                                     style = MaterialTheme.typography.bodyMedium,
                                 )
                             }

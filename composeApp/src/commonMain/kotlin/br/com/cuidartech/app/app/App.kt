@@ -1,15 +1,6 @@
 package br.com.cuidartech.app.app
 
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideIn
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOut
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHost
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -37,20 +28,6 @@ fun App() {
         ) {
             navigation<Route.CuidarTechGraphRoute>(
                 startDestination = Route.HomeRoute,
-                enterTransition = {
-                    slideInHorizontally(
-                        spring(
-                            stiffness = Spring.StiffnessMediumLow,
-                        ),
-                    ) { it }
-                },
-                exitTransition = {
-                    slideOutHorizontally(
-                        spring(
-                            stiffness = Spring.StiffnessMediumLow,
-                        ),
-                    ) { it }
-                },
             ) {
                 composable<Route.HomeRoute> {
                     HomeScreen(

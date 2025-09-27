@@ -10,6 +10,7 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -99,14 +100,14 @@ fun NursingProcessContent(
                                 // Slide in from 40 dp from the top.
                                 with(density) { -40.dp.roundToPx() }
                             } +
-                                expandVertically(
-                                    // Expand from the top.
-                                    expandFrom = Alignment.Top,
-                                ) +
-                                fadeIn(
-                                    // Fade in with the initial alpha of 0.3f.
-                                    initialAlpha = 0.3f,
-                                ),
+                                    expandVertically(
+                                        // Expand from the top.
+                                        expandFrom = Alignment.Top,
+                                    ) +
+                                    fadeIn(
+                                        // Fade in with the initial alpha of 0.3f.
+                                        initialAlpha = 0.3f,
+                                    ),
                         exit = slideOutVertically() + shrinkVertically() + fadeOut(),
                     ) {
                         Column(
@@ -147,24 +148,26 @@ fun NursingProcessContent(
                             }
                             viewState.nursingProcess.references.forEach {
                                 Row(
-                                    modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                                    modifier = Modifier.fillMaxWidth()
+                                        .clickable(
+                                            enabled = it.url != null,
+                                            onClick = {
+                                                it.url?.let { url ->
+                                                    onReferenceClick(url)
+                                                }
+                                            }
+                                        ).padding(16.dp),
                                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                                     verticalAlignment = Alignment.CenterVertically,
                                 ) {
-                                    if (it.url != null) {
-                                        IconButton(
-                                            onClick = {
-                                                onReferenceClick(it.url)
-                                            },
-                                        ) {
-                                            Icon(
-                                                modifier = Modifier.size(20.dp).alignByBaseline(),
-                                                painter = painterResource(Res.drawable.icon_file_open),
-                                                tint = MaterialTheme.colorScheme.primary,
-                                                contentDescription = "Abrir referência",
-                                            )
-                                        }
-                                    }
+
+                                    Icon(
+                                        modifier = Modifier.size(20.dp).alignByBaseline(),
+                                        painter = painterResource(Res.drawable.icon_file_open),
+                                        tint = MaterialTheme.colorScheme.primary,
+                                        contentDescription = "Abrir referência",
+                                    )
+
                                     Text(
                                         text = it.reference,
                                         fontWeight = FontWeight.SemiBold,
