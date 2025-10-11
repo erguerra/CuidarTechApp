@@ -13,6 +13,7 @@ import br.com.cuidartech.app.ui.nursingDiagnostic.NursingDiagnosticScreen
 import br.com.cuidartech.app.ui.nursingDiagnosticList.NursingDiagnosticListScreen
 import br.com.cuidartech.app.ui.nursingProcess.NursingProcessScreen
 import br.com.cuidartech.app.ui.nursingProcessList.NursingProcessListScreen
+import br.com.cuidartech.app.ui.splash.SplashScreen
 import br.com.cuidartech.app.ui.subjects.HomeScreen
 import br.com.cuidartech.app.ui.theme.CuidardTechTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -27,8 +28,16 @@ fun App() {
             navController = navController,
         ) {
             navigation<Route.CuidarTechGraphRoute>(
-                startDestination = Route.HomeRoute,
+                startDestination = Route.SplashRoute,
             ) {
+                composable<Route.SplashRoute> {
+                    SplashScreen(onFinished = { _ ->
+                        navController.navigate(Route.HomeRoute) {
+                            popUpTo<Route.SplashRoute> { inclusive = true }
+                            launchSingleTop = true
+                        }
+                    })
+                }
                 composable<Route.HomeRoute> {
                     HomeScreen(
                         goToNursingProcessList = { navController.navigate(Route.NursingProcessListRoute) },

@@ -9,6 +9,9 @@ sealed interface Route {
     data object CuidarTechGraphRoute : Route
 
     @Serializable
+    data object SplashRoute : Route
+
+    @Serializable
     data object HomeRoute : Route
 
     @Serializable

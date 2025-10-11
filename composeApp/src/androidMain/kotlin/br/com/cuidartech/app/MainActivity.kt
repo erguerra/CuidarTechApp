@@ -13,6 +13,7 @@ import org.koin.core.context.GlobalContext
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_CuidarTech)
         super.onCreate(savedInstanceState)
 
         Firebase.initialize(this)

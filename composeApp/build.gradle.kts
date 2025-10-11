@@ -40,6 +40,7 @@ kotlin {
             implementation(project.dependencies.platform(libs.firebase.bom))
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.androidx.core.splashscreen)
             implementation(libs.firebase.firestore)
             implementation(libs.firebase.common.ktx)
             implementation(libs.koin.androidx.compose)

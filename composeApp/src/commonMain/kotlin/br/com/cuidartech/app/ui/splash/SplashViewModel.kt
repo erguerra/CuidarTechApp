@@ -1,4 +1,4 @@
-package br.com.cuidartech.app.ui.subjects
+package br.com.cuidartech.app.ui.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -6,45 +6,44 @@ import br.com.cuidartech.app.data.SubjectRepository
 import br.com.cuidartech.app.data.SubjectsPrefetchStore
 import br.com.cuidartech.app.domain.model.Subject
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class HomeViewModel(
+class SplashViewModel(
     private val subjectRepository: SubjectRepository,
     private val subjectsPrefetchStore: SubjectsPrefetchStore,
 ) : ViewModel() {
-    private val _viewState = MutableStateFlow<ViewState>(ViewState.Loading)
-    val viewState = _viewState.asStateFlow()
+    private val _state = MutableStateFlow<ViewState>(ViewState.Loading)
+    val state: StateFlow<ViewState> = _state.asStateFlow()
 
     init {
-        val preloadedSubjects = subjectsPrefetchStore.consume()
-        if (preloadedSubjects != null) {
-            _viewState.value = ViewState.Success(preloadedSubjects)
-        } else {
-            loadSubjects()
-        }
+        loadSubjects()
+    }
+
+    fun retry() {
+        loadSubjects()
     }
 
     private fun loadSubjects() {
         viewModelScope.launch {
+            _state.value = ViewState.Loading
             subjectRepository
                 .getSubjects()
                 .onSuccess { subjectList ->
-                    _viewState.update { ViewState.Success(subjectList) }
+                    subjectsPrefetchStore.store(subjectList)
+                    _state.value = ViewState.Success(subjectList)
                 }.onFailure {
-                    _viewState.update { ViewState.Error }
+                    _state.value = ViewState.Error
                 }
         }
     }
 
     sealed interface ViewState {
-        data class Success(
-            val subjectList: List<Subject>,
-        ) : ViewState
-
         data object Loading : ViewState
 
         data object Error : ViewState
+
+        data class Success(val subjectList: List<Subject>) : ViewState
     }
 }

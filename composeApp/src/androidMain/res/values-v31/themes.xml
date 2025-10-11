@@ -1,0 +1,7 @@
+<resources>
+    <style name="Theme.CuidarTech.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="postSplashScreenTheme">@style/Theme.CuidarTech</item>
+    </style>
+</resources>
