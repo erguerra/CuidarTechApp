@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import br.com.cuidartech.app.ui.components.LargeText
+import br.com.cuidartech.app.ui.strings.AppStrings
 
 @Composable
 fun FeedbackDialog(
@@ -63,14 +64,14 @@ fun FeedbackDialog(
                     when (variant) {
                         FeedbackDialogVariant.WRONG_ANSWER ->
                             Triple(
-                                "Resposta Errada",
+                                AppStrings.CaseStudyFeedback.wrongTitle,
                                 Color.Red.copy(alpha = 0.7f),
                                 Icons.Default.Warning,
                             )
 
                         FeedbackDialogVariant.RIGHT_ANSWER ->
                             Triple(
-                                "Resposta Certa!",
+                                AppStrings.CaseStudyFeedback.rightTitle,
                                 primaryColor,
                                 Icons.Default.Check,
                             )
@@ -116,8 +117,8 @@ fun FeedbackDialog(
                     ) {
                         val dismissAction =
                             when (variant) {
-                                FeedbackDialogVariant.RIGHT_ANSWER -> "Concluir"
-                                FeedbackDialogVariant.WRONG_ANSWER -> "Tentar Novamente"
+                                FeedbackDialogVariant.RIGHT_ANSWER -> AppStrings.CaseStudyFeedback.rightDismiss
+                                FeedbackDialogVariant.WRONG_ANSWER -> AppStrings.CaseStudyFeedback.wrongDismiss
                             }
                         Text(
                             text = dismissAction,

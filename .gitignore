@@ -10,6 +10,21 @@ local.properties
 captures
 .externalNativeBuild
 .cxx
+**/*.xcuserstate
+# Firebase / platform configs
+google-services.json
+**/GoogleService-Info.plist
+# Signing artifacts & secrets
+*.keystore
+*.jks
+*.p12
+*.p8
+*.mobileprovision
+# Environment overrides
+.env
+.env.*
+# Firebase tooling temp files
+firebase-debug.log
 *.xcodeproj/*
 !*.xcodeproj/project.pbxproj
 !*.xcodeproj/xcshareddata/

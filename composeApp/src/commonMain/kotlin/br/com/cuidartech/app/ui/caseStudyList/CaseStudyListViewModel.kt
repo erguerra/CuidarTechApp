@@ -7,7 +7,6 @@ import androidx.navigation.toRoute
 import br.com.cuidartech.app.app.navigation.Route
 import br.com.cuidartech.app.data.SubjectRepository
 import br.com.cuidartech.app.domain.model.CaseStudy
-import br.com.cuidartech.app.domain.model.Subject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

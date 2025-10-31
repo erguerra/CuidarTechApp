@@ -41,19 +41,29 @@ fun App() {
                 composable<Route.HomeRoute> {
                     HomeScreen(
                         goToNursingProcessList = { navController.navigate(Route.NursingProcessListRoute) },
-                        goToCaseStudyList = { subjectId, title, primaryColor ->
+                        goToNursingProcess = { processId ->
+                            navController.navigate(Route.NursingProcessRoute(processId))
+                        },
+                        goToCaseStudyList = { subjectId, title ->
                             navController.navigate(
                                 Route.CaseStudyListRoute(
                                     subjectId,
                                     title,
-                                    primaryColorLong = primaryColor,
                                 ),
                             )
                         },
-                        goToDiagnosticList = { subjectId, title, primaryColor ->
+                        goToCaseStudy = { caseStudyPath, title ->
                             navController.navigate(
-                                Route.DiagnosticListRoute(subjectId, title, primaryColor),
+                                Route.CaseStudyRoute(caseStudyPath, title),
                             )
+                        },
+                        goToDiagnosticList = { subjectId, title ->
+                            navController.navigate(
+                                Route.DiagnosticListRoute(subjectId, title),
+                            )
+                        },
+                        goToDiagnostic = { diagnosticPath ->
+                            navController.navigate(Route.DiagnosticRoute(diagnosticPath))
                         },
                     )
                 }
@@ -71,11 +81,10 @@ fun App() {
                     val args = entry.toRoute<Route.CaseStudyListRoute>()
                     CaseStudyListScreen(
                         title = args.title,
-                        primaryColorLong = args.primaryColorLong,
                         navigateBack = navController::navigateUp,
-                        navigateToAnItem = { caseStudyPath, title, primaryColorLong ->
+                        navigateToAnItem = { caseStudyPath, title ->
                             navController.navigate(
-                                Route.CaseStudyRoute(caseStudyPath, title, primaryColorLong),
+                                Route.CaseStudyRoute(caseStudyPath, title),
                             )
                         },
                     )
@@ -85,11 +94,10 @@ fun App() {
 
                     NursingDiagnosticListScreen(
                         title = args.title,
-                        primaryColorLong = args.primaryColorLong,
                         navigateBack = navController::navigateUp,
-                        navigateToAnItem = { diagnosticPath, primaryColorLong ->
+                        navigateToAnItem = { diagnosticPath ->
                             navController.navigate(
-                                Route.DiagnosticRoute(diagnosticPath, primaryColorLong),
+                                Route.DiagnosticRoute(diagnosticPath),
                             )
                         },
                     )
@@ -99,7 +107,6 @@ fun App() {
 
                     CaseStudyScreen(
                         title = args.title,
-                        primaryColorLong = args.primaryColorLong,
                         navigateBack = navController::navigateUp,
                     )
                 }
@@ -107,7 +114,6 @@ fun App() {
                     val args = entry.toRoute<Route.DiagnosticRoute>()
 
                     NursingDiagnosticScreen(
-                        primaryColor = args.primaryColorLong,
                         navigateBack = navController::navigateUp,
                     )
                 }

@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.sp
 import br.com.cuidartech.app.domain.model.Alternative
 import br.com.cuidartech.app.ui.components.CuidarTechAppBar
 import br.com.cuidartech.app.ui.components.LargeText
+import br.com.cuidartech.app.ui.strings.AppStrings
 import cuidartechapp.composeapp.generated.resources.Res
 import cuidartechapp.composeapp.generated.resources.icon_case_study
 import org.jetbrains.compose.resources.painterResource
@@ -53,19 +54,18 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun CaseStudyContent(
     title: String,
-    primaryColor: Color?,
     viewState: CaseStudyViewModel.ViewState,
     chooseAlternative: (Alternative) -> Unit,
     closeModal: () -> Unit,
     toggleScenario: () -> Unit,
     navigateBack: () -> Unit,
 ) {
-    val customColor = primaryColor ?: MaterialTheme.colorScheme.primary
+    val customColor = MaterialTheme.colorScheme.primary
     Scaffold(
         topBar = {
             CuidarTechAppBar(
                 title = title,
-                contentColor = primaryColor,
+                contentColor = customColor,
                 navigateBackAction = navigateBack,
             )
         },
@@ -112,10 +112,10 @@ fun CaseStudyContent(
                                     modifier = Modifier.size(42.dp),
                                     painter = painterResource(Res.drawable.icon_case_study),
                                     tint = customColor,
-                                    contentDescription = "Estudo de Caso",
+                                    contentDescription = AppStrings.CaseStudyList.cardContentDescription,
                                 )
                                 Text(
-                                    text = "Cenário",
+                                    text = AppStrings.CaseStudyDetail.scenarioTitle,
                                     style = MaterialTheme.typography.headlineLarge,
                                     fontWeight = FontWeight.Bold,
                                     color = MaterialTheme.colorScheme.onBackground,
@@ -151,7 +151,7 @@ fun CaseStudyContent(
                         Spacer(Modifier.size(24.dp))
 
                         val question =
-                            viewState.caseStudy.question ?: "Escolha uma das alternativas abaixo"
+                            viewState.caseStudy.question ?: AppStrings.CaseStudyDetail.fallbackQuestion
 
                         Text(
                             text = question,
@@ -239,6 +239,6 @@ fun RotatingArrow(isExpanded: Boolean) {
         imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight, // points right
         modifier = Modifier.size(36.dp).rotate(rotationAngle),
         tint = MaterialTheme.colorScheme.onBackground,
-        contentDescription = "Expandir",
+        contentDescription = AppStrings.Accessibility.expand,
     )
 }

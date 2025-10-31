@@ -48,6 +48,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.cuidartech.app.ui.components.CuidarTechAppBar
 import br.com.cuidartech.app.ui.components.LargeText
+import br.com.cuidartech.app.ui.strings.AppStrings
 import br.com.cuidartech.app.ui.theme.CuidardTechTheme
 import br.com.cuidartech.app.ui.theme.getMerriweatherSans
 import cuidartechapp.composeapp.generated.resources.Res
@@ -65,7 +66,7 @@ fun NursingProcessContent(
     Scaffold(
         topBar = {
             CuidarTechAppBar(
-                title = "Processo de Enfermagem",
+                title = AppStrings.NursingProcessDetail.topBarTitle,
                 contentColor = MaterialTheme.colorScheme.primary,
                 navigateBackAction = navigateBack,
             )
@@ -81,7 +82,7 @@ fun NursingProcessContent(
             contentAlignment = Alignment.Center,
         ) {
             when (viewState) {
-                is NursingProcessViewModel.ViewState.Error -> Text("Deu merda!")
+                is NursingProcessViewModel.ViewState.Error -> Text(AppStrings.errorGeneric)
                 is NursingProcessViewModel.ViewState.Loading ->
                     CircularProgressIndicator(
                         color = MaterialTheme.colorScheme.primary,
@@ -133,7 +134,7 @@ fun NursingProcessContent(
                                         modifier = Modifier.size(42.dp),
                                         painter = painterResource(Res.drawable.icon_nursing_process),
                                         tint = MaterialTheme.colorScheme.primary,
-                                        contentDescription = "Processo de Enfermagem",
+                                        contentDescription = AppStrings.NursingProcessDetail.iconContentDescription,
                                     )
                                     Text(
                                         text = viewState.nursingProcess.title,
@@ -165,7 +166,7 @@ fun NursingProcessContent(
                                         modifier = Modifier.size(20.dp).alignByBaseline(),
                                         painter = painterResource(Res.drawable.icon_file_open),
                                         tint = MaterialTheme.colorScheme.primary,
-                                        contentDescription = "Abrir referência",
+                                        contentDescription = AppStrings.NursingProcessDetail.referenceContentDescription,
                                     )
 
                                     Text(

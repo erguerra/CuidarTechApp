@@ -1,4 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="ic_cuidartech_background">#fbfbfe</color>
     <color name="splash_background">#FDFDFD</color>
     <color name="splash_primary">#0B6767</color>
 </resources>

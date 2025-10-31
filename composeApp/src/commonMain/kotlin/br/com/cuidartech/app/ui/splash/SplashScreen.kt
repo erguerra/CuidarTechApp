@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.cuidartech.app.domain.model.Subject
+import br.com.cuidartech.app.ui.strings.AppStrings
 import cuidartechapp.composeapp.generated.resources.Res
 import cuidartechapp.composeapp.generated.resources.background_pattern
 import org.jetbrains.compose.resources.painterResource
@@ -79,15 +80,9 @@ private fun SplashContent(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
-                text = "CuidarTech",
+                text = AppStrings.Splash.title,
                 style = MaterialTheme.typography.displaySmall,
                 color = MaterialTheme.colorScheme.primary,
-            )
-            Spacer(modifier = Modifier.size(16.dp))
-            Text(
-                text = "Seu guia para o processo de enfermagem",
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.8f),
             )
 
             Spacer(modifier = Modifier.size(48.dp))
@@ -103,12 +98,12 @@ private fun SplashContent(
                             verticalArrangement = Arrangement.spacedBy(16.dp),
                         ) {
                             Text(
-                                text = "Não conseguimos carregar os conteúdos.",
+                                text = AppStrings.Splash.errorMessage,
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onBackground,
                             )
                             Button(onClick = onRetry) {
-                                Text(text = "Tentar novamente")
+                                Text(text = AppStrings.Splash.retryButton)
                             }
                         }
 

@@ -9,6 +9,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import br.com.cuidartech.app.ui.strings.AppStrings
 
 @Composable
 fun CuidarTechAppBar(
@@ -28,7 +29,7 @@ fun CuidarTechAppBar(
                 IconButton(onClick = it) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Voltar", // TODO: Internationalize
+                        contentDescription = AppStrings.Accessibility.back,
                         tint = contentColor ?: MaterialTheme.colorScheme.primary,
                     )
                 }

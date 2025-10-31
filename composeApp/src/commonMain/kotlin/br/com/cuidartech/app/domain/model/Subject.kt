@@ -8,6 +8,7 @@ import kotlinx.serialization.Serializable
 data class Subject(
     val id: String,
     val title: String,
+    val description: String? = null,
     @SerialName("primary_color")
     val primaryColor: Long?,
     val features: Set<SubjectFeatures>?,

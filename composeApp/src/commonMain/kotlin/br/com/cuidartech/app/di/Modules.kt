@@ -10,6 +10,7 @@ import br.com.cuidartech.app.ui.nursingDiagnostic.NursingDiagnosticViewModel
 import br.com.cuidartech.app.ui.nursingDiagnosticList.NursingDiagnosticListViewModel
 import br.com.cuidartech.app.ui.nursingProcess.NursingProcessViewModel
 import br.com.cuidartech.app.ui.nursingProcessList.NursingProcessListViewModel
+import br.com.cuidartech.app.ui.subjects.HomeSearchViewModel
 import br.com.cuidartech.app.ui.subjects.HomeViewModel
 import br.com.cuidartech.app.ui.splash.SplashViewModel
 import dev.gitlive.firebase.Firebase
@@ -29,6 +30,7 @@ val dataModule =
         singleOf(::NursingDiagnosticUIModelMapper)
         viewModelOf(::NursingProcessListViewModel)
         viewModelOf(::HomeViewModel)
+        viewModelOf(::HomeSearchViewModel)
         viewModelOf(::CaseStudyListViewModel)
         viewModelOf(::NursingDiagnosticListViewModel)
         viewModelOf(::CaseStudyViewModel)
