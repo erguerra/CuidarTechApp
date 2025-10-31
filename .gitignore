@@ -20,6 +20,7 @@ google-services.json
 *.p12
 *.p8
 *.mobileprovision
+keystore.properties
 # Environment overrides
 .env
 .env.*
