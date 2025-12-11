@@ -12,7 +12,7 @@ class SearchDiagnosticAction(
     private val buildSnippet: BuildSearchSnippetAction,
     private val filterForSubject: FilterForSubjectAction,
 ) {
-    suspend operator fun invoke(
+    operator fun invoke(
         query: String,
         subjectId: String?,
         diagnosticsBySubject: Map<String, List<NursingDiagnostic>>,

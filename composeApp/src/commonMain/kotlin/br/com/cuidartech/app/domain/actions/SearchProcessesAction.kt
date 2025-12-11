@@ -9,7 +9,7 @@ class SearchProcessesAction(
     private val buildSnippet: BuildSearchSnippetAction,
 ) {
 
-    suspend operator fun invoke(
+    operator fun invoke(
         query: String,
         processes: List<NursingProcess>,
     ): List<SearchResult> {

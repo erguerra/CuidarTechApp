@@ -12,11 +12,6 @@ class SearchRepository(
     private val nursingProcessRepository: NursingProcessRepository,
     private val cache: SearchDataCache,
 ) {
-
-    /**
-     * Entry point used by the search use case. It ensures every dataset is ready and returns
-     * the subject list so we can build the lookup later.
-     */
     suspend fun ensureBaseDataLoaded(subjectFilter: String?, subjects: List<Subject>) {
         ensureProcessesLoaded()
 
@@ -27,16 +22,12 @@ class SearchRepository(
         ensureDiagnosticsLoaded(subjectsToLoad)
     }
 
-    /** Expose cached processes so the use case can build the search results. */
     fun getProcesses() = cache.processes
 
-    /** Expose cached case studies grouped by subject id. */
     fun getCaseStudiesBySubject() = cache.caseStudies
 
-    /** Expose cached diagnostics grouped by subject id. */
     fun getDiagnosticsBySubject() = cache.diagnostics
 
-    /** Allow the app to wipe everything when needed (e.g., logout). */
     fun clearCache() {
         cache.cleanUp()
     }

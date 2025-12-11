@@ -12,7 +12,7 @@ class SearchCaseStudyAction(
     private val filterForSubject: FilterForSubjectAction,
 ) {
 
-    suspend operator fun invoke(
+    operator fun invoke(
         query: String,
         subjectId: String?,
         caseStudiesBySubject: Map<String, List<CaseStudy>>,
