@@ -12,7 +12,7 @@ sealed interface HomeSearchState {
 
     data class SearchItem(
         val id: String,
-        val title: String,
+        val title: String?,
         val subtitle: String?,
         val snippet: String?,
         val type: ResultType,

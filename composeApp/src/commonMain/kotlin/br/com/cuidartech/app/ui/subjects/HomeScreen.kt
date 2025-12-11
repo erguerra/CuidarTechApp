@@ -104,7 +104,7 @@ fun HomeScreen(
                     HomeSearchState.ResultType.CASE_STUDY ->
                         goToCaseStudy(
                             item.id,
-                            item.title,
+                            item.title.orEmpty(),
                         )
                 }
                 isSearchVisible = false

@@ -382,7 +382,7 @@ private fun SearchResultCard(
                 )
                 Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                     Text3(
-                        text = highlightText(item.title, query),
+                        text = highlightText(item.title.orEmpty(), query),
                         style = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.onSurface,
                         fontWeight = FontWeight.SemiBold,

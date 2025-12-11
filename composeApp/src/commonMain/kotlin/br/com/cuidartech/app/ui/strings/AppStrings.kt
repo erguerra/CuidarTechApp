@@ -5,7 +5,7 @@ object AppStrings {
 
     object Home {
         const val welcomeTitle = "Bem-vindo(a)!"
-        const val welcomeSubtitle = "Organize seus estudos e retome o conteúdo que precisa com poucos toques."
+        const val welcomeSubtitle = "Organize seus estudos e encontre que precisa com poucos toques."
         const val exploreButton = "Explorar"
         const val homeSectionTitle = "Assuntos"
         const val heroTitle = "Processo de enfermagem"
