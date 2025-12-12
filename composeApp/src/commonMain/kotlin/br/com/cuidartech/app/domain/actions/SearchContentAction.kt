@@ -32,7 +32,7 @@ class SearchContentAction(
             )
         }
 
-    private suspend fun buildResults(
+    private fun buildResults(
         query: String,
         filters: SearchFilter,
         subjectLookup: Map<String, Subject>,
